@@ -29,6 +29,22 @@ public class TaiKhoanDTO {
             this.trangthai = trangthai;
         }
         
+         public TaiKhoanDTO(int idTaiKhoan, String tendangnhap, String matkhau, int loaitaikhoan, int idNhanVien){
+            this.idTaiKhoan = idTaiKhoan;
+            this.tendangnhap = tendangnhap;
+            this.matkhau = matkhau;
+            this.loaitaikhoan = loaitaikhoan;
+            this.idNhanVien = idNhanVien;
+        }
+         
+          public TaiKhoanDTO(String tendangnhap, String matkhau, int loaitaikhoan, int idNhanVien){
+            this.tendangnhap = tendangnhap;
+            this.matkhau = matkhau;
+            this.loaitaikhoan = loaitaikhoan;
+            this.idNhanVien = idNhanVien;
+        }
+         
+         
         public int getIdTaiKhoan(){
             return idTaiKhoan;
         }
@@ -76,9 +92,5 @@ public class TaiKhoanDTO {
         public void setTrangThai(int trangthai){
             this.trangthai   = trangthai;
         }
-        
-        @Override
-    public String toString() {
-        return "TaiKhoanDTO{" + "IdTaiKhoan=" + idTaiKhoan + ", TenDangNhap=" + tendangnhap + ", MatKhau=" + matkhau + ", IdNhanVien=" + idNhanVien +", LoaiTaiKhoan=" + loaitaikhoan+ ", trangthai=" + trangthai + '}';
-    }
+       
 }

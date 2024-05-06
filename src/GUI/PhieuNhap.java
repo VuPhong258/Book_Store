@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+
 /**
  *
  * @author Acer
@@ -15,6 +17,11 @@ public class PhieuNhap extends javax.swing.JPanel {
      */
     public PhieuNhap() {
         initComponents();
+        btn_them.setIcon(new FlatSVGIcon("./GUI/icon/add.svg"));
+        btn_sua.setIcon(new FlatSVGIcon("./GUI/icon/edit.svg"));
+        btn_xoa.setIcon(new FlatSVGIcon("./GUI/icon/delete.svg"));
+        btn_chitiet.setIcon(new FlatSVGIcon("./GUI/icon/detail.svg"));
+        btn_lammoi.setIcon(new FlatSVGIcon("./GUI/icon/toolBar_refresh.svg"));
     }
 
     /**
@@ -34,8 +41,8 @@ public class PhieuNhap extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         txt_timkiem = new javax.swing.JTextField();
         btn_lammoi = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl_phieunhap = new javax.swing.JTable();
 
         setPreferredSize(new java.awt.Dimension(1000, 500));
         setLayout(new java.awt.BorderLayout());
@@ -67,7 +74,6 @@ public class PhieuNhap extends javax.swing.JPanel {
         panel_control.add(jLabel1);
 
         txt_timkiem.setPreferredSize(new java.awt.Dimension(100, 30));
-        txt_timkiem.setRequestFocusEnabled(false);
         panel_control.add(txt_timkiem);
 
         btn_lammoi.setBackground(new java.awt.Color(255, 255, 255));
@@ -77,22 +83,29 @@ public class PhieuNhap extends javax.swing.JPanel {
 
         add(panel_control, java.awt.BorderLayout.PAGE_START);
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(1200, 700));
+        tbl_phieunhap.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Mã", "Tên loại", "Title 3", "Title 4"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(1200, 800));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tbl_phieunhap.setPreferredSize(new java.awt.Dimension(1200, 800));
+        jScrollPane2.setViewportView(tbl_phieunhap);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1032, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-        );
-
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        add(jScrollPane2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -103,9 +116,9 @@ public class PhieuNhap extends javax.swing.JPanel {
     private javax.swing.JButton btn_them;
     private javax.swing.JButton btn_xoa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panel_control;
+    private javax.swing.JTable tbl_phieunhap;
     private javax.swing.JTextField txt_timkiem;
     // End of variables declaration//GEN-END:variables
 }

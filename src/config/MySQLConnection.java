@@ -25,10 +25,11 @@ public class MySQLConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
             // Tạo kết nối
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("successfull!");
+//            System.out.println("successfull!");
+            
         } catch (ClassNotFoundException | SQLException e) {
 //            e.printStackTrace();
-//            System.out.println("failed!");
+            System.out.println("failed!");
                JOptionPane.showMessageDialog(null, e);
         }
         return connection;
@@ -43,5 +44,8 @@ public class MySQLConnection {
                 e.printStackTrace();
             }
         }
+    }
+    public static void main (String args[]){
+        getConnection();
     }
 }

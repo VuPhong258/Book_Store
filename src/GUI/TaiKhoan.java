@@ -4,17 +4,120 @@
  */
 package GUI;
 
+import BUS.TaiKhoanBUS;
+import DAO.TaiKhoanDAO;
+import DTO.TaiKhoanDTO;
+import GUI.TKhoan.SuaTK;
+import GUI.TKhoan.ThemTK;
+
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 /**
  *
  * @author Acer
  */
 public class TaiKhoan extends javax.swing.JPanel {
 
+    public final TaiKhoanBUS tkBUS = new TaiKhoanBUS();
+    public ArrayList<TaiKhoanDTO> listTaiKhoan = tkBUS.getAll();
+    DefaultTableModel tblModel;
+    TaiKhoanBUS taiKhoanBUS;
+    TaiKhoanDAO taiKhoanDAO;
+    ThemTK themTk;
+    SuaTK suaTk;
+
     /**
      * Creates new form SanPham
      */
     public TaiKhoan() {
         initComponents();
+        btn_them.setIcon(new FlatSVGIcon("./GUI/icon/add.svg"));
+        btn_sua.setIcon(new FlatSVGIcon("./GUI/icon/edit.svg"));
+        btn_xoa.setIcon(new FlatSVGIcon("./GUI/icon/delete.svg"));
+        btn_chitiet.setIcon(new FlatSVGIcon("./GUI/icon/detail.svg"));
+        btn_lammoi.setIcon(new FlatSVGIcon("./GUI/icon/toolBar_refresh.svg"));
+        hienThiListTaiKhoan(listTaiKhoan);
+    }
+
+    public void hienThiListTaiKhoan(ArrayList<TaiKhoanDTO> listTaiKhoan) {
+        taiKhoanBUS = new TaiKhoanBUS();
+        taiKhoanDAO = new TaiKhoanDAO();
+        DefaultTableModel model = (DefaultTableModel) tbl_taikhoan.getModel();
+        model.setRowCount(0);
+        for (TaiKhoanDTO taiKhoanDTO : listTaiKhoan) {
+            Object[] row = {
+                taiKhoanDTO.getIdTaiKhoan(),
+                taiKhoanDTO.getTenDangNhap(),
+                taiKhoanDTO.getMatKhau(),
+                taiKhoanDTO.getIdNhanVien(),
+                taiKhoanDTO.getLoaiTaiKhoan()};
+            model.addRow(row);
+        }
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Áp dụng renderer cho từng cột trong bảng
+        for (int i = 0; i < tbl_taikhoan.getColumnCount(); i++) {
+            tbl_taikhoan.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+    }
+
+    private TaiKhoanDTO selectTaiKhoan() {
+        int selectedRow = tbl_taikhoan.getSelectedRow();
+        TaiKhoanDTO result = null;
+        if (selectedRow != -1) {
+            String tendangnhap = (String) tbl_taikhoan.getValueAt(selectedRow, 1);
+            taiKhoanBUS = new TaiKhoanBUS();
+            result = taiKhoanBUS.selectByUserName(tendangnhap);
+        }
+        return result;
+    }
+
+    public void xoaTaiKhoan() {
+        int selectedRow = tbl_taikhoan.getSelectedRow();
+        if (selectedRow != -1) {
+
+            String tendangnhap = (String) tbl_taikhoan.getValueAt(selectedRow, 1);
+            TaiKhoanDTO canXoa = taiKhoanBUS.selectByUserName(tendangnhap);
+            taiKhoanBUS = new TaiKhoanBUS();
+            boolean thanhcong = taiKhoanBUS.xoaTaiKhoan(tendangnhap);
+            JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa tài khoản này");
+            if (thanhcong) {
+                JOptionPane.showMessageDialog(null, "Xóa tài khoản thành công");
+                listTaiKhoan = taiKhoanBUS.getAll();
+                hienThiListTaiKhoan(listTaiKhoan);
+            } else {
+                JOptionPane.showMessageDialog(null, "Xóa tài khoản lỗi");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn tài khoản để xóa");
+        }
+    }
+
+    private void timKiemTaiKhoan(String keyword) {
+        ArrayList<TaiKhoanDTO> ketQuaTimKiem = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) tbl_taikhoan.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String tentaikhoan = (String) model.getValueAt(i, 1);
+            int id_taikhoan = (int) model.getValueAt(i, 0);
+            int idnhanvien = (int) model.getValueAt(i, 4);
+            int loaitaikhoan = (int) model.getValueAt(i, 3);
+            if (tentaikhoan.toLowerCase().contains(keyword.toLowerCase())
+                    || String.valueOf(id_taikhoan).contains(keyword) || String.valueOf(idnhanvien).contains(keyword) || String.valueOf(loaitaikhoan).contains(keyword)) {
+                ketQuaTimKiem.add(taiKhoanBUS.selectById(id_taikhoan));
+            }
+           
+            }
+            if (ketQuaTimKiem.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Không tìm thấy tài khoản! ");
+            }
+            hienThiListTaiKhoan(ketQuaTimKiem);
     }
 
     /**
@@ -34,8 +137,8 @@ public class TaiKhoan extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         txt_timkiem = new javax.swing.JTextField();
         btn_lammoi = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl_taikhoan = new javax.swing.JTable();
 
         setPreferredSize(new java.awt.Dimension(1000, 500));
         setLayout(new java.awt.BorderLayout());
@@ -46,16 +149,31 @@ public class TaiKhoan extends javax.swing.JPanel {
         btn_them.setBackground(new java.awt.Color(255, 255, 255));
         btn_them.setText("Thêm");
         btn_them.setFocusable(false);
+        btn_them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_themActionPerformed(evt);
+            }
+        });
         panel_control.add(btn_them);
 
         btn_sua.setBackground(new java.awt.Color(255, 255, 255));
         btn_sua.setText("Sửa");
         btn_sua.setFocusable(false);
+        btn_sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_suaActionPerformed(evt);
+            }
+        });
         panel_control.add(btn_sua);
 
         btn_xoa.setBackground(new java.awt.Color(255, 255, 255));
         btn_xoa.setText("Xóa");
         btn_xoa.setFocusable(false);
+        btn_xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_xoaActionPerformed(evt);
+            }
+        });
         panel_control.add(btn_xoa);
 
         btn_chitiet.setBackground(new java.awt.Color(255, 255, 255));
@@ -67,33 +185,95 @@ public class TaiKhoan extends javax.swing.JPanel {
         panel_control.add(jLabel1);
 
         txt_timkiem.setPreferredSize(new java.awt.Dimension(100, 30));
-        txt_timkiem.setRequestFocusEnabled(false);
+        txt_timkiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_timkiemKeyPressed(evt);
+            }
+        });
         panel_control.add(txt_timkiem);
 
         btn_lammoi.setBackground(new java.awt.Color(255, 255, 255));
         btn_lammoi.setText("Làm mới");
         btn_lammoi.setFocusable(false);
+        btn_lammoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lammoiActionPerformed(evt);
+            }
+        });
         panel_control.add(btn_lammoi);
 
         add(panel_control, java.awt.BorderLayout.PAGE_START);
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(1200, 700));
+        tbl_taikhoan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Mã tài khoản", "Tên đăng nhâp", "Mật khẩu", "Loại tài khoản", "Id nhân viên"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(1200, 800));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1032, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-        );
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_taikhoan.setGridColor(new java.awt.Color(204, 204, 204));
+        tbl_taikhoan.setPreferredSize(new java.awt.Dimension(1200, 800));
+        tbl_taikhoan.setSelectionBackground(new java.awt.Color(153, 153, 153));
+        jScrollPane2.setViewportView(tbl_taikhoan);
+        if (tbl_taikhoan.getColumnModel().getColumnCount() > 0) {
+            tbl_taikhoan.getColumnModel().getColumn(0).setResizable(false);
+            tbl_taikhoan.getColumnModel().getColumn(1).setResizable(false);
+            tbl_taikhoan.getColumnModel().getColumn(2).setResizable(false);
+            tbl_taikhoan.getColumnModel().getColumn(3).setResizable(false);
+            tbl_taikhoan.getColumnModel().getColumn(4).setResizable(false);
+        }
 
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        add(jScrollPane2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
+        ThemTK tk = new ThemTK();
+        tk.setVisible(true);
+    }//GEN-LAST:event_btn_themActionPerformed
+
+    private void btn_lammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lammoiActionPerformed
+        listTaiKhoan = taiKhoanBUS.getAll();
+        hienThiListTaiKhoan(listTaiKhoan);
+    }//GEN-LAST:event_btn_lammoiActionPerformed
+
+    private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
+        xoaTaiKhoan();
+    }//GEN-LAST:event_btn_xoaActionPerformed
+
+    private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
+        if (selectTaiKhoan() != null) {
+            suaTk = new SuaTK(selectTaiKhoan());
+            suaTk.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn tài khoản ");
+        }
+    }//GEN-LAST:event_btn_suaActionPerformed
+
+    private void txt_timkiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_timkiemKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String keyword = txt_timkiem.getText().trim();
+            timKiemTaiKhoan(keyword);
+        }
+    }//GEN-LAST:event_txt_timkiemKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -103,9 +283,9 @@ public class TaiKhoan extends javax.swing.JPanel {
     private javax.swing.JButton btn_them;
     private javax.swing.JButton btn_xoa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panel_control;
+    private javax.swing.JTable tbl_taikhoan;
     private javax.swing.JTextField txt_timkiem;
     // End of variables declaration//GEN-END:variables
 }

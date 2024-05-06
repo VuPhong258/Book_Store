@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -21,12 +22,12 @@ import javax.swing.JToggleButton;
 public class Main extends javax.swing.JFrame {
     TrangChu trangChu;
     SanPham sanPham;
-    LoaiSanPham loaiSanPham;
     TacGia tacGia;
     NhaCungCap nhaCungCap;
     PhieuNhap phieuNhap;
     TaiKhoan taiKhoan;
     HoaDon hoaDon;
+    KhachHang khachHang;
 
     /**
      * Creates new form Main
@@ -43,6 +44,19 @@ public class Main extends javax.swing.JFrame {
 //        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 //        scrollPane.setBorder(null);
 //        menuTaskbar.add(scrollPane, java.awt.BorderLayout.CENTER);
+           btn_home.setIcon(new FlatSVGIcon("./GUI/icon/home.svg"));
+           btn_product.setIcon(new FlatSVGIcon("./GUI/icon/book.svg"));
+           btn_tacgia.setIcon(new FlatSVGIcon("./GUI/icon/tacgia.svg"));
+           btn_phieunhap.setIcon(new FlatSVGIcon("./GUI/icon/phieunhap.svg"));
+           btn_hoadon.setIcon(new FlatSVGIcon("./GUI/icon/bill.svg"));
+           btn_nhacungcap.setIcon(new FlatSVGIcon("./GUI/icon/nhacungcap.svg"));
+           btn_taikhoan.setIcon(new FlatSVGIcon("./GUI/icon/taikhoan.svg"));
+           btn_khachhang.setIcon(new FlatSVGIcon("./GUI/icon/customer.svg"));
+           btn_thongke.setIcon(new FlatSVGIcon("./GUI/icon/thongke.svg"));
+           btn_dangxuat.setIcon(new FlatSVGIcon("./GUI/icon/dangxuat.svg"));
+           
+           
+
         
     }
     
@@ -57,13 +71,15 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         mainContent = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         menuTaskbar = new javax.swing.JPanel();
         info = new javax.swing.JPanel();
         lbl_tenNV = new javax.swing.JLabel();
         lbl_chucvu = new javax.swing.JLabel();
         taskBar = new javax.swing.JPanel();
-        btn_loaisanpham = new javax.swing.JToggleButton();
         btn_home = new javax.swing.JToggleButton();
         btn_tacgia = new javax.swing.JToggleButton();
         btn_product = new javax.swing.JToggleButton();
@@ -71,6 +87,7 @@ public class Main extends javax.swing.JFrame {
         btn_hoadon = new javax.swing.JToggleButton();
         btn_nhacungcap = new javax.swing.JToggleButton();
         btn_taikhoan = new javax.swing.JToggleButton();
+        btn_khachhang = new javax.swing.JToggleButton();
         btn_thongke = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
         btn_dangxuat = new javax.swing.JToggleButton();
@@ -79,17 +96,35 @@ public class Main extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
-        mainContent.setBackground(new java.awt.Color(255, 51, 51));
+        mainContent.setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icon/java.png"))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel2.setText("Lập trình Java");
 
         javax.swing.GroupLayout mainContentLayout = new javax.swing.GroupLayout(mainContent);
         mainContent.setLayout(mainContentLayout);
         mainContentLayout.setHorizontalGroup(
             mainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGroup(mainContentLayout.createSequentialGroup()
+                .addGap(194, 194, 194)
+                .addComponent(jLabel1)
+                .addGap(53, 53, 53)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(282, Short.MAX_VALUE))
         );
         mainContentLayout.setVerticalGroup(
             mainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(mainContentLayout.createSequentialGroup()
+                .addGroup(mainContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainContentLayout.createSequentialGroup()
+                        .addGap(282, 282, 282)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainContentLayout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(394, Short.MAX_VALUE))
         );
 
         menuTaskbar.setBackground(new java.awt.Color(255, 255, 255));
@@ -124,16 +159,8 @@ public class Main extends javax.swing.JFrame {
 
         taskBar.setBackground(new java.awt.Color(255, 255, 255));
 
-        btn_loaisanpham.setBackground(new java.awt.Color(255, 255, 255));
-        btn_loaisanpham.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn_loaisanpham.setText("Loại sản phẩm");
-        btn_loaisanpham.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_loaisanphamActionPerformed(evt);
-            }
-        });
-
         btn_home.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(btn_home);
         btn_home.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_home.setText("Trang chủ");
         btn_home.addActionListener(new java.awt.event.ActionListener() {
@@ -143,6 +170,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_tacgia.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(btn_tacgia);
         btn_tacgia.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_tacgia.setText("Tác giả");
         btn_tacgia.addActionListener(new java.awt.event.ActionListener() {
@@ -152,6 +180,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_product.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(btn_product);
         btn_product.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_product.setText("Sản phẩm");
         btn_product.addActionListener(new java.awt.event.ActionListener() {
@@ -161,6 +190,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_phieunhap.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(btn_phieunhap);
         btn_phieunhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_phieunhap.setText("Phiếu nhập");
         btn_phieunhap.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +200,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_hoadon.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(btn_hoadon);
         btn_hoadon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_hoadon.setText("Hóa đơn");
         btn_hoadon.addActionListener(new java.awt.event.ActionListener() {
@@ -179,6 +210,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_nhacungcap.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(btn_nhacungcap);
         btn_nhacungcap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_nhacungcap.setText("Nhà cung cấp");
         btn_nhacungcap.addActionListener(new java.awt.event.ActionListener() {
@@ -188,6 +220,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_taikhoan.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(btn_taikhoan);
         btn_taikhoan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_taikhoan.setText("Tài khoản");
         btn_taikhoan.addActionListener(new java.awt.event.ActionListener() {
@@ -196,7 +229,20 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btn_khachhang.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(btn_khachhang);
+        btn_khachhang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_khachhang.setText("Khách hàng");
+        btn_khachhang.setBorderPainted(false);
+        btn_khachhang.setOpaque(true);
+        btn_khachhang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_khachhangActionPerformed(evt);
+            }
+        });
+
         btn_thongke.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(btn_thongke);
         btn_thongke.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_thongke.setText("Thống kê");
 
@@ -204,38 +250,55 @@ public class Main extends javax.swing.JFrame {
         taskBar.setLayout(taskBarLayout);
         taskBarLayout.setHorizontalGroup(
             taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btn_loaisanpham, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
             .addComponent(btn_tacgia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_product, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_home, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_phieunhap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_hoadon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btn_nhacungcap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_nhacungcap, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
             .addComponent(btn_taikhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_khachhang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_thongke, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         taskBarLayout.setVerticalGroup(
             taskBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(taskBarLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
-                .addComponent(btn_home, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_home, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_product, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_tacgia, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_loaisanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_phieunhap, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_tacgia, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_hoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_phieunhap, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_nhacungcap, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_hoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_taikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_nhacungcap, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_khachhang, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_thongke, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+        );
+
+        javax.swing.GroupLayout menuTaskbarLayout = new javax.swing.GroupLayout(menuTaskbar);
+        menuTaskbar.setLayout(menuTaskbarLayout);
+        menuTaskbarLayout.setHorizontalGroup(
+            menuTaskbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(taskBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        menuTaskbarLayout.setVerticalGroup(
+            menuTaskbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuTaskbarLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_taikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_thongke, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addComponent(taskBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -243,6 +306,11 @@ public class Main extends javax.swing.JFrame {
         btn_dangxuat.setBackground(new java.awt.Color(255, 255, 255));
         btn_dangxuat.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btn_dangxuat.setText("Đăng xuất");
+        btn_dangxuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_dangxuatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -252,32 +320,10 @@ public class Main extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(btn_dangxuat, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout menuTaskbarLayout = new javax.swing.GroupLayout(menuTaskbar);
-        menuTaskbar.setLayout(menuTaskbarLayout);
-        menuTaskbarLayout.setHorizontalGroup(
-            menuTaskbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuTaskbarLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(menuTaskbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(taskBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        menuTaskbarLayout.setVerticalGroup(
-            menuTaskbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuTaskbarLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(taskBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -285,7 +331,9 @@ public class Main extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(menuTaskbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menuTaskbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mainContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -293,7 +341,11 @@ public class Main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(menuTaskbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(menuTaskbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(56, 56, 56)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -308,11 +360,6 @@ public class Main extends javax.swing.JFrame {
        sanPham = new SanPham();
        addTaskBar(mainContent, sanPham);
     }//GEN-LAST:event_btn_productActionPerformed
-
-    private void btn_loaisanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loaisanphamActionPerformed
-        loaiSanPham = new LoaiSanPham();
-        addTaskBar(mainContent, loaiSanPham);
-    }//GEN-LAST:event_btn_loaisanphamActionPerformed
 
     private void btn_tacgiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tacgiaActionPerformed
          tacGia = new TacGia();
@@ -338,6 +385,17 @@ public class Main extends javax.swing.JFrame {
          taiKhoan = new TaiKhoan();
        addTaskBar(mainContent, taiKhoan);
     }//GEN-LAST:event_btn_taikhoanActionPerformed
+
+    private void btn_dangxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dangxuatActionPerformed
+        Login login = new Login();
+        login.setVisible(true);
+         dispose();
+    }//GEN-LAST:event_btn_dangxuatActionPerformed
+
+    private void btn_khachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_khachhangActionPerformed
+        khachHang = new KhachHang();
+        addTaskBar(mainContent, khachHang);
+    }//GEN-LAST:event_btn_khachhangActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,60 +449,63 @@ public class Main extends javax.swing.JFrame {
     private void addHoverBtn() {
         addHoverEffect(btn_home);
         addHoverEffect(btn_product);
-        addHoverEffect(btn_loaisanpham);
         addHoverEffect(btn_tacgia);
         addHoverEffect(btn_phieunhap);
         addHoverEffect(btn_hoadon);
         addHoverEffect(btn_nhacungcap);
         addHoverEffect(btn_taikhoan);
+        addHoverEffect(btn_khachhang);
         addHoverEffect(btn_thongke);
         addHoverEffect(btn_dangxuat);
         // Thêm hiệu ứng hover cho từng button
     }
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Main().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btn_dangxuat;
     private javax.swing.JToggleButton btn_hoadon;
     private javax.swing.JToggleButton btn_home;
-    private javax.swing.JToggleButton btn_loaisanpham;
+    private javax.swing.JToggleButton btn_khachhang;
     private javax.swing.JToggleButton btn_nhacungcap;
     private javax.swing.JToggleButton btn_phieunhap;
     private javax.swing.JToggleButton btn_product;
     private javax.swing.JToggleButton btn_tacgia;
     private javax.swing.JToggleButton btn_taikhoan;
     private javax.swing.JToggleButton btn_thongke;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel info;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_chucvu;
     private javax.swing.JLabel lbl_tenNV;

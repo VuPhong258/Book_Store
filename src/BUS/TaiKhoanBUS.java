@@ -16,12 +16,31 @@ public class TaiKhoanBUS {
     private ArrayList<TaiKhoanDTO> tkDTO = new ArrayList<>(); 
     
     public TaiKhoanBUS(){
-            tkDTO =  tkDAO.selectAll();
+            tkDTO =  tkDAO.getAll();
     }
     
      public ArrayList<TaiKhoanDTO> getAll() {
         return this.tkDTO;
     }
      
+     public boolean addTaiKhoan(TaiKhoanDTO taiKhoanDTO){
+         return TaiKhoanDAO.getInstance().addTaiKhoan(taiKhoanDTO);
+     }
+     
+     public boolean suaTaiKhoan(TaiKhoanDTO taiKhoanDTO){
+         return TaiKhoanDAO.getInstance().suaTaiKhoan(taiKhoanDTO);
+     }
+     
+     public boolean xoaTaiKhoan(String tendangnhap){
+         return TaiKhoanDAO.getInstance().xoaTaiKhoan(tendangnhap);
+     }
+     
+     public TaiKhoanDTO selectByUserName(String tendangnhap){
+         return TaiKhoanDAO.getInstance().selectByUserName(tendangnhap);
+     }
+     
+     public TaiKhoanDTO selectById(int id_taikhoan) {
+         return TaiKhoanDAO.getInstance().selectById(id_taikhoan);
+     }
      
 }
