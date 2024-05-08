@@ -6,12 +6,29 @@ package GUI;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
+import BUS.HoaDonBUS;
+import DAO.HoaDonDAO;
+import DTO.HoaDonDTO;
+import GUI.HDon.ThemHD;
+import BUS.KhachHangBUS;
+import GUI.HDon.CTHoaDon;
+import BUS.ChiTietHoaDonBUS;
+import DTO.ChiTietHoaDonDTO;
+
+import java.awt.event.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Acer
  */
 public class HoaDon extends javax.swing.JPanel {
-
+    private ArrayList<HoaDonDTO> listHoaDon = (new HoaDonBUS()).getAll();
     /**
      * Creates new form SanPham
      */
@@ -22,6 +39,46 @@ public class HoaDon extends javax.swing.JPanel {
         btn_xoa.setIcon(new FlatSVGIcon("./GUI/icon/delete.svg"));
         btn_chitiet.setIcon(new FlatSVGIcon("./GUI/icon/detail.svg"));
         btn_lammoi.setIcon(new FlatSVGIcon("./GUI/icon/toolBar_refresh.svg"));
+        hienThiListHoaDon(listHoaDon);
+    }
+
+    public void hienThiListHoaDon(ArrayList<HoaDonDTO> listHoaDon){
+                DefaultTableModel model = (DefaultTableModel) tbl_hoadon.getModel();
+                model.setRowCount(0);
+                for (HoaDonDTO hoaDonDTO : listHoaDon){
+                    Object [] row = {
+                        hoaDonDTO.getIdHoaDon(),
+                        new KhachHangBUS().selectByID(hoaDonDTO.getIdKh()).getHoTen(),                      //already an int
+                        hoaDonDTO.getIdNv(),
+                        hoaDonDTO.getNgayLapHoaDon(),
+                        hoaDonDTO.getTongTien(),
+                        hoaDonDTO.getTrangthai()
+                    };
+                    model.addRow(row);
+                }
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                
+                for (int i =0;  i< tbl_hoadon.getColumnCount(); i++){
+                       tbl_hoadon.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+                }
+    }
+    
+    public static String tinhTongTien(ArrayList<ChiTietHoaDonDTO> listCTHD) {
+        float tongTien = 0;
+        StringBuilder result = new StringBuilder();
+        for(ChiTietHoaDonDTO cthdDTO : listCTHD) {
+            float giaTien = Float.parseFloat(cthdDTO.getGiaBan().substring(0, cthdDTO.getGiaBan().length() - 3)); //bỏ 3 chữ VND ở cuối
+            tongTien += giaTien;
+        }
+        result.append(tongTien);
+        int decimalIndex = result.length() - Float.toString(tongTien).indexOf('.');
+        while(decimalIndex <= 3) {
+            result.append('0');
+            decimalIndex++;
+        }
+        result.append("VNĐ");
+        return result.toString();
     }
 
     /**
@@ -53,6 +110,11 @@ public class HoaDon extends javax.swing.JPanel {
         btn_them.setBackground(new java.awt.Color(255, 255, 255));
         btn_them.setText("Thêm");
         btn_them.setFocusable(false);
+        btn_them.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_themMouseClicked(evt);
+            }
+        });
         panel_control.add(btn_them);
 
         btn_sua.setBackground(new java.awt.Color(255, 255, 255));
@@ -68,6 +130,11 @@ public class HoaDon extends javax.swing.JPanel {
         btn_chitiet.setBackground(new java.awt.Color(255, 255, 255));
         btn_chitiet.setText("Chi tiết");
         btn_chitiet.setFocusable(false);
+        btn_chitiet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_chitietMouseClicked(evt);
+            }
+        });
         panel_control.add(btn_chitiet);
 
         jLabel1.setText("Tìm kiếm");
@@ -85,21 +152,28 @@ public class HoaDon extends javax.swing.JPanel {
 
         tbl_hoadon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã", "Tên loại", "Title 3", "Title 4"
+                "Mã hóa đơn", "Tên khách hàng", "Mã nhân viên", "Ngày lập", "Tổng tiền", "Trạng thái"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tbl_hoadon.setPreferredSize(new java.awt.Dimension(1200, 800));
@@ -108,6 +182,25 @@ public class HoaDon extends javax.swing.JPanel {
         add(jScrollPane2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_chitietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_chitietMouseClicked
+        int slctedRow = tbl_hoadon.getSelectedRow();
+        if (slctedRow != -1) {
+            Object idHD = tbl_hoadon.getValueAt(slctedRow, 0);
+            if (idHD instanceof Integer int_idHD) {
+                ArrayList<ChiTietHoaDonDTO> cthdList = new ChiTietHoaDonBUS().getAllByID(int_idHD);
+                CTHoaDon ctHD = new CTHoaDon(cthdList);
+                ctHD.setVisible(true);
+            }          
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn hóa đơn để xem chi tiết");
+        }
+    }//GEN-LAST:event_btn_chitietMouseClicked
+
+    private void btn_themMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_themMouseClicked
+        ThemHD themHD = new ThemHD();
+        themHD.setVisible(true);
+    }//GEN-LAST:event_btn_themMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_chitiet;
