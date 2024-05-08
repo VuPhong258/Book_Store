@@ -30,7 +30,7 @@ public class ChiTietHoaDonDAO {
         ArrayList<ChiTietHoaDonDTO> result = new ArrayList<>();
         try {
             connect = MySQLConnection.getConnection();
-            String query = "SELECT * FROM `chitiethoadon`";
+            String query = "SELECT * FROM `tbl_chitiethoadon`";
             pst = connect.prepareStatement(query);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
@@ -51,7 +51,7 @@ public class ChiTietHoaDonDAO {
         ArrayList<ChiTietHoaDonDTO> result = new ArrayList<>();
         try {
             connect = MySQLConnection.getConnection();
-            String query = "SELECT * FROM `chitiethoadon` WHERE id_hoadon=" + idhd;
+            String query = "SELECT * FROM `tbl_chitiethoadon` WHERE id_hoadon=" + idhd;
             pst = connect.prepareStatement(query);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
@@ -73,7 +73,7 @@ public class ChiTietHoaDonDAO {
         for (int i = 0; i < listcthd.size(); i++) {
             try {
                 connect = MySQLConnection.getConnection();
-                String sql = "INSERT INTO `chitiethoadon`(`id_hoadon`, `soluongmua`, `id_sach`, `giaban`) VALUES (?,?,?,?)";
+                String sql = "INSERT INTO `tbl_chitiethoadon`(`id_hoadon`, `soluongmua`, `id_sach`, `giaban`) VALUES (?,?,?,?)";
                 pst = (PreparedStatement) connect.prepareStatement(sql);
                 pst.setInt(1, listcthd.get(i).getIdHoaDon());
                 pst.setInt(2, listcthd.get(i).getIdSach());
@@ -97,7 +97,7 @@ public class ChiTietHoaDonDAO {
         boolean status= false;
         try {
             connect = MySQLConnection.getConnection();
-            String sql = "DELETE FROM `chitiethoadon` WHERE id_hoadon = ?";
+            String sql = "DELETE FROM `tbl_chitiethoadon` WHERE id_hoadon = ?";
             pst = (PreparedStatement) connect.prepareStatement(sql);
             pst.setInt(1, hdId);
             int allRow  = pst.executeUpdate();
