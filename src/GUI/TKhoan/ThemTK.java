@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 /**
  *
@@ -39,20 +41,21 @@ public class ThemTK extends javax.swing.JFrame {
          else if (txt_password.getText().isEmpty()){
            showMessage("Vui lòng không để trống mật khẩu");
         }
-        else if (txt_type.getText().isEmpty()){
-           showMessage("Vui lòng không để trống loại tài khoản");
-        } else if (txt_idnv.getText().isEmpty()){
+//        else if (txt_type.getText().isEmpty()){
+//           showMessage("Vui lòng không để trống loại tài khoản");}
+        else if (txt_idnv.getText().isEmpty()){
            showMessage("Vui lòng không để trống id nhân viên");
         }
        
         
         String username =  txt_name.getText();
-        int type =Integer.parseInt( txt_type.getText());
+//        int type =Integer.parseInt( txt_type.getText());
+        String role = String.valueOf(cbb_role.getSelectedItem());
         String password = txt_password.getText();
         int id_nv =Integer.parseInt( txt_idnv.getText());
         
         
-        taiKhoanDTO = new TaiKhoanDTO(username, password, type, id_nv);
+        taiKhoanDTO = new TaiKhoanDTO(username, password, role, id_nv);
         return taiKhoanDTO;
     }
     
@@ -63,19 +66,30 @@ public class ThemTK extends javax.swing.JFrame {
     // Kiểm tra xem chuỗi có chứa ký tự đặc biệt không
     return str.matches(".*" + regex + ".*");
 }
-
+    
+//    private boolean checkType(String type){
+//         // Biểu thức chính quy để kiểm tra số từ 1 đến 4
+//        String regex = "^[1-4]$";
+//        
+//        // Tạo đối tượng Pattern
+//        Pattern pattern = Pattern.compile(regex);
+//        
+//        // Tạo đối tượng Matcher
+//        Matcher matcher = pattern.matcher(type);
+//        
+//        // Kiểm tra khớp
+//        return matcher.matches();
+//    }
     
     private boolean isValidData() {
         String username =  txt_name.getText();
-//        int type =Integer.parseInt( txt_type.getText());
         String password = txt_password.getText();
-//        int id_nv =Integer.parseInt( txt_idnv.getText());
+
         // Kiểm tra tên đăng nhập không chưa ký tự đặc biệt
         if (containsSpecialCharacter(username)){
             showMessage("Tên đăng nhập không được chứa ký tự đặc biệt");
                 return false;
         }
-        
         // Kiểm tra độ dài của mật khẩu
         if (password.length() <8){
             showMessage("Mật khẩu phải dài hơn 8 ký tự");
@@ -132,7 +146,6 @@ public class ThemTK extends javax.swing.JFrame {
         lbl_title = new javax.swing.JLabel();
         pnl_center = new javax.swing.JPanel();
         lbl_name = new javax.swing.JLabel();
-        txt_type = new javax.swing.JTextField();
         lbl_address = new javax.swing.JLabel();
         txt_password = new javax.swing.JTextField();
         txt_name = new javax.swing.JTextField();
@@ -141,6 +154,7 @@ public class ThemTK extends javax.swing.JFrame {
         btn_cancel = new javax.swing.JButton();
         lbl_phone1 = new javax.swing.JLabel();
         txt_idnv = new javax.swing.JTextField();
+        cbb_role = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -175,9 +189,7 @@ public class ThemTK extends javax.swing.JFrame {
 
         lbl_name.setText("Tên đăng nhập");
 
-        txt_type.setPreferredSize(new java.awt.Dimension(93, 16));
-
-        lbl_address.setText("Loại tài khoản");
+        lbl_address.setText("Quyền");
 
         lbl_phone.setText("Mật khẩu");
 
@@ -199,6 +211,8 @@ public class ThemTK extends javax.swing.JFrame {
 
         lbl_phone1.setText("Id nhân viên");
 
+        cbb_role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không có", "Admin", "Quản lý kho", "Quản lý nhập", "Nhân viên bán hàng" }));
+
         javax.swing.GroupLayout pnl_centerLayout = new javax.swing.GroupLayout(pnl_center);
         pnl_center.setLayout(pnl_centerLayout);
         pnl_centerLayout.setHorizontalGroup(
@@ -218,11 +232,11 @@ public class ThemTK extends javax.swing.JFrame {
                         .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(65, 65, 65)))
                 .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txt_type, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                     .addComponent(lbl_address, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                     .addComponent(btn_cancel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_phone1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_idnv, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(txt_idnv, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbb_role, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(143, Short.MAX_VALUE))
         );
         pnl_centerLayout.setVerticalGroup(
@@ -236,9 +250,9 @@ public class ThemTK extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_centerLayout.createSequentialGroup()
                         .addComponent(lbl_address, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_type, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txt_name, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(cbb_role))
                 .addGap(18, 18, 18)
                 .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_phone, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -326,6 +340,7 @@ public class ThemTK extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_cancel;
+    private javax.swing.JComboBox<String> cbb_role;
     private javax.swing.JLabel lbl_address;
     private javax.swing.JLabel lbl_name;
     private javax.swing.JLabel lbl_phone;
@@ -336,6 +351,5 @@ public class ThemTK extends javax.swing.JFrame {
     private javax.swing.JTextField txt_idnv;
     private javax.swing.JTextField txt_name;
     private javax.swing.JTextField txt_password;
-    private javax.swing.JTextField txt_type;
     // End of variables declaration//GEN-END:variables
 }

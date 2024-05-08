@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import BUS.TaiKhoanBUS;
+import DAO.TaiKhoanDAO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,12 +16,15 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
+import DTO.TaiKhoanDTO;
+import java.util.ArrayList;
 
 /**
  *
  * @author Acer
  */
 public class Main extends javax.swing.JFrame {
+    
     TrangChu trangChu;
     SanPham sanPham;
     TacGia tacGia;
@@ -28,6 +33,7 @@ public class Main extends javax.swing.JFrame {
     TaiKhoan taiKhoan;
     HoaDon hoaDon;
     KhachHang khachHang;
+    ThongKe thongKe;
 
     /**
      * Creates new form Main
@@ -55,8 +61,10 @@ public class Main extends javax.swing.JFrame {
            btn_thongke.setIcon(new FlatSVGIcon("./GUI/icon/thongke.svg"));
            btn_dangxuat.setIcon(new FlatSVGIcon("./GUI/icon/dangxuat.svg"));
            
-           
-
+//           lbl_chucvu.setText(String.valueOf(taiKhoanDTO.getTenQuyen()));
+//           if(String.valueOf(taiKhoanDTO.getTenQuyen()).equalsIgnoreCase("Không có")) {
+//               lbl_chucvu.setText("Khách hàng");
+//           }
         
     }
     
@@ -245,6 +253,11 @@ public class Main extends javax.swing.JFrame {
         buttonGroup1.add(btn_thongke);
         btn_thongke.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_thongke.setText("Thống kê");
+        btn_thongke.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_thongkeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout taskBarLayout = new javax.swing.GroupLayout(taskBar);
         taskBar.setLayout(taskBarLayout);
@@ -396,6 +409,11 @@ public class Main extends javax.swing.JFrame {
         khachHang = new KhachHang();
         addTaskBar(mainContent, khachHang);
     }//GEN-LAST:event_btn_khachhangActionPerformed
+
+    private void btn_thongkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thongkeActionPerformed
+        thongKe = new ThongKe();
+        addTaskBar(mainContent, thongKe);
+    }//GEN-LAST:event_btn_thongkeActionPerformed
 
     /**
      * @param args the command line arguments

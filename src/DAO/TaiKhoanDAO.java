@@ -41,7 +41,8 @@ public class TaiKhoanDAO {
                     String matkhau = rs.getString("matkhau");
                     int loaitaikhoan = rs.getInt("loaitaikhoan");
                     int trangthai = rs.getInt("trangthai");
-                    TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau, idNhanVien, loaitaikhoan, trangthai );
+                    String quyen = rs.getString("tenquyen");
+                    TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau, loaitaikhoan, idNhanVien, quyen, trangthai);
                     result.add(tkDTO);
                     
                 }
@@ -54,13 +55,13 @@ public class TaiKhoanDAO {
        
        public boolean addTaiKhoan(TaiKhoanDTO taiKhoanDTO){
            boolean status = false;
-           String sql = "INSERT INTO `tbl_taikhoan` (tendangnhap, matkhau, loaitaikhoan,id_nhanvien) VALUES (?,?,?,?)";
+           String sql = "INSERT INTO `tbl_taikhoan` (tendangnhap, matkhau, tenquyen,id_nhanvien) VALUES (?,?,?,?)";
                    try {
                         connect = MySQLConnection.getConnection();
                         pst = connect.prepareStatement(sql);
                         pst.setString(1, taiKhoanDTO.getTenDangNhap());
                         pst.setString(2, taiKhoanDTO.getMatKhau());
-                        pst.setInt(3,taiKhoanDTO.getLoaiTaiKhoan());
+                        pst.setString(3,taiKhoanDTO.getTenQuyen());
                         pst.setInt(4 ,taiKhoanDTO.getIdNhanVien());
                         int allRow  = pst.executeUpdate();
                         if (allRow > 0 ){
@@ -78,11 +79,11 @@ public class TaiKhoanDAO {
            boolean status = false;
            try {
                connect = MySQLConnection.getConnection();
-               String sql = "UPDATE `tbl_taikhoan` SET tendangnhap = ? , matkhau=?,  loaitaikhoan =?, id_nhanvien = ? WHERE id_tai_khoan=?";
+               String sql = "UPDATE `tbl_taikhoan` SET tendangnhap = ? , matkhau=?,  tenquyen =?, id_nhanvien = ? WHERE id_tai_khoan=?";
                pst = connect.prepareStatement(sql);
                pst.setString(1, taiKhoanDTO.getTenDangNhap());
                pst.setString(2, taiKhoanDTO.getMatKhau());
-               pst.setInt(3,taiKhoanDTO.getLoaiTaiKhoan());
+               pst.setString(3,taiKhoanDTO.getTenQuyen());
                pst.setInt(4 ,taiKhoanDTO.getIdNhanVien());
                pst.setInt(5, taiKhoanDTO.getIdTaiKhoan());
                int allRow  = pst.executeUpdate();
@@ -128,8 +129,8 @@ public class TaiKhoanDAO {
                 int idNhanVien = rs.getInt("id_nhanvien");
                 String tendangnhap = rs.getString("tendangnhap");
                 String matkhau = rs.getString("matkhau");
-                int loaitaikhoan = rs.getInt("loaitaikhoan");
-                 TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau, idNhanVien, loaitaikhoan );
+                String  tenquyen = rs.getString("tenquyen");
+                 TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau,  tenquyen,idNhanVien );
                 result = tkDTO;
             }
             MySQLConnection.closeConnection(connect);
@@ -152,8 +153,8 @@ public class TaiKhoanDAO {
                 int idNhanVien = rs.getInt("id_nhanvien");
                 String tendangnhap = rs.getString("tendangnhap");
                 String matkhau = rs.getString("matkhau");
-                int loaitaikhoan = rs.getInt("loaitaikhoan");
-                 TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau, idNhanVien, loaitaikhoan );
+                String tenquyen = rs.getString("tenquyen");
+                 TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau, tenquyen, idNhanVien );
                 result = tkDTO;
             }
             MySQLConnection.closeConnection(connect);

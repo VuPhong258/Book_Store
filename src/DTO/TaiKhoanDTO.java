@@ -14,33 +14,35 @@ public class TaiKhoanDTO {
         private String matkhau;
         private int loaitaikhoan;
         private int idNhanVien;
+        private String tenquyen;
         private int trangthai;
         
         public TaiKhoanDTO(){
         
         }
         
-        public TaiKhoanDTO(int idTaiKhoan, String tendangnhap, String matkhau, int loaitaikhoan, int idNhanVien, int trangthai){
+        public TaiKhoanDTO(int idTaiKhoan, String tendangnhap, String matkhau, int loaitaikhoan, int idNhanVien, String tenquyen,int trangthai){
             this.idTaiKhoan = idTaiKhoan;
             this.tendangnhap = tendangnhap;
             this.matkhau = matkhau;
             this.loaitaikhoan = loaitaikhoan;
             this.idNhanVien = idNhanVien;
+            this.tenquyen = tenquyen;
             this.trangthai = trangthai;
         }
         
-         public TaiKhoanDTO(int idTaiKhoan, String tendangnhap, String matkhau, int loaitaikhoan, int idNhanVien){
+         public TaiKhoanDTO(int idTaiKhoan, String tendangnhap, String matkhau, String tenquyen, int idNhanVien){
             this.idTaiKhoan = idTaiKhoan;
             this.tendangnhap = tendangnhap;
             this.matkhau = matkhau;
-            this.loaitaikhoan = loaitaikhoan;
+            this.tenquyen = tenquyen;
             this.idNhanVien = idNhanVien;
         }
          
-          public TaiKhoanDTO(String tendangnhap, String matkhau, int loaitaikhoan, int idNhanVien){
+          public TaiKhoanDTO(String tendangnhap, String matkhau, String tenquyen, int idNhanVien){
             this.tendangnhap = tendangnhap;
             this.matkhau = matkhau;
-            this.loaitaikhoan = loaitaikhoan;
+            this.tenquyen = tenquyen;
             this.idNhanVien = idNhanVien;
         }
          
@@ -93,4 +95,11 @@ public class TaiKhoanDTO {
             this.trangthai   = trangthai;
         }
        
+         public String getTenQuyen(){
+            return tenquyen;
+        }
+        
+        public void setTenQuyen(String tenquyen){
+            this.tenquyen   = tenquyen;
+        }
 }

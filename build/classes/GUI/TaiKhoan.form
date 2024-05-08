@@ -131,7 +131,7 @@
                 <Column editable="false" title="M&#xe3; t&#xe0;i kho&#x1ea3;n" type="java.lang.Integer"/>
                 <Column editable="false" title="T&#xea;n &#x111;&#x103;ng nh&#xe2;p" type="java.lang.String"/>
                 <Column editable="false" title="M&#x1ead;t kh&#x1ea9;u" type="java.lang.String"/>
-                <Column editable="false" title="Lo&#x1ea1;i t&#xe0;i kho&#x1ea3;n" type="java.lang.Integer"/>
+                <Column editable="false" title="Quy&#x1ec1;n" type="java.lang.String"/>
                 <Column editable="false" title="Id nh&#xe2;n vi&#xea;n" type="java.lang.Integer"/>
               </Table>
             </Property>

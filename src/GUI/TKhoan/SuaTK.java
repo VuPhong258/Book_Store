@@ -49,8 +49,8 @@ public class SuaTK extends javax.swing.JFrame {
            if (taiKhoanDTO != null) {
             txt_name.setText(String.valueOf(taiKhoanDTO.getTenDangNhap()));
             txt_password.setText(String.valueOf(taiKhoanDTO.getMatKhau()));
-            txt_idNV.setText(String.valueOf(taiKhoanDTO.getLoaiTaiKhoan()));
-            txt_loai.setText(String.valueOf(taiKhoanDTO.getLoaiTaiKhoan()));
+            txt_idNV.setText(String.valueOf(taiKhoanDTO.getIdNhanVien()));
+            cbb_role.getSelectedObjects();
 
             }else {
         // Xử lý trường hợp nhaCungCapDTO là null
@@ -58,7 +58,6 @@ public class SuaTK extends javax.swing.JFrame {
         txt_name.setText("");
         txt_idNV.setText("");
         txt_password.setText("");
-        txt_loai.setText("");
 //        showMessage("Không có thông tin nhà cung cấp để hiển thị");
         JOptionPane.showMessageDialog(this, "Không có thông tin tài khoản để hiển thị", "Thông báo", JOptionPane.WARNING_MESSAGE);
     }
@@ -68,8 +67,8 @@ public class SuaTK extends javax.swing.JFrame {
         String name = txt_name.getText();
         int idNhanVien = Integer.parseInt(txt_idNV.getText());
         String password = txt_password.getText();
-        int loaitaikhoan = Integer.parseInt(txt_loai.getText());
-        taiKhoanDTO = new TaiKhoanDTO(name,password,idNhanVien,loaitaikhoan);
+        String tenquyen = (String) cbb_role.getSelectedItem();
+        taiKhoanDTO = new TaiKhoanDTO(name,password,tenquyen,idNhanVien);
         return taiKhoanDTO;
     }
 
@@ -159,8 +158,8 @@ public class SuaTK extends javax.swing.JFrame {
         lbl_password = new javax.swing.JLabel();
         btn_sua = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
-        txt_loai = new javax.swing.JTextField();
         lbl_loai = new javax.swing.JLabel();
+        cbb_role = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -217,9 +216,14 @@ public class SuaTK extends javax.swing.JFrame {
             }
         });
 
-        txt_loai.setPreferredSize(new java.awt.Dimension(93, 16));
-
         lbl_loai.setText("Loại tài khoản");
+
+        cbb_role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không có", "Admin", "Quản lý kho", "Quản lý nhập", "Nhân viên bán hàng" }));
+        cbb_role.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbb_roleActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_centerLayout = new javax.swing.GroupLayout(pnl_center);
         pnl_center.setLayout(pnl_centerLayout);
@@ -239,37 +243,36 @@ public class SuaTK extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btn_sua, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(65, 65, 65)))
-                .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txt_idNV, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbl_idNV, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_cancel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_loai, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_loai, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_idNV, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .addComponent(txt_idNV, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .addComponent(lbl_loai, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .addComponent(cbb_role, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(296, Short.MAX_VALUE))
         );
         pnl_centerLayout.setVerticalGroup(
             pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_centerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_centerLayout.createSequentialGroup()
-                        .addComponent(lbl_name, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_centerLayout.createSequentialGroup()
-                        .addComponent(lbl_idNV, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_idNV, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_name, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_loai, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnl_centerLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_centerLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbb_role)))
                 .addGap(18, 18, 18)
                 .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_password, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_loai, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_idNV, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_loai, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_idNV, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(pnl_centerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_sua, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,7 +288,7 @@ public class SuaTK extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnl_top, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnl_center, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 133, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,6 +313,10 @@ public class SuaTK extends javax.swing.JFrame {
     private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
         dispose();
     }//GEN-LAST:event_btn_cancelActionPerformed
+
+    private void cbb_roleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_roleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbb_roleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -350,6 +357,7 @@ public class SuaTK extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_sua;
+    private javax.swing.JComboBox<String> cbb_role;
     private javax.swing.JLabel lbl_idNV;
     private javax.swing.JLabel lbl_loai;
     private javax.swing.JLabel lbl_name;
@@ -358,7 +366,6 @@ public class SuaTK extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_center;
     private javax.swing.JPanel pnl_top;
     private javax.swing.JTextField txt_idNV;
-    private javax.swing.JTextField txt_loai;
     private javax.swing.JTextField txt_name;
     private javax.swing.JTextField txt_password;
     // End of variables declaration//GEN-END:variables

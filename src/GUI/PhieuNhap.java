@@ -4,14 +4,29 @@
  */
 package GUI;
 
+import BUS.PhieuNhapBUS;
+import DAO.PhieuNhapDAO;
+import DTO.PhieuNhapDTO;
+import GUI.PNhap.ChiTietPNhap;
+import GUI.PNhap.SuaPNhap;
+import GUI.PNhap.ThemPNhap;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Acer
  */
 public class PhieuNhap extends javax.swing.JPanel {
-
+    public final PhieuNhapBUS tkBUS = new PhieuNhapBUS();
+    private ArrayList<PhieuNhapDTO> listPhieuNhap = tkBUS.getAll();
+    PhieuNhapBUS khachHangBUS;
+    PhieuNhapDAO khachHangDAO;
+    DefaultTableModel tblmodel;
+    ThemPNhap addPN;
+    SuaPNhap suaPN;
+    ChiTietPNhap chiTietPN;
     /**
      * Creates new form SanPham
      */
@@ -22,6 +37,7 @@ public class PhieuNhap extends javax.swing.JPanel {
         btn_xoa.setIcon(new FlatSVGIcon("./GUI/icon/delete.svg"));
         btn_chitiet.setIcon(new FlatSVGIcon("./GUI/icon/detail.svg"));
         btn_lammoi.setIcon(new FlatSVGIcon("./GUI/icon/toolBar_refresh.svg"));
+        
     }
 
     /**
@@ -50,24 +66,30 @@ public class PhieuNhap extends javax.swing.JPanel {
         panel_control.setMinimumSize(new java.awt.Dimension(100, 100));
         panel_control.setPreferredSize(new java.awt.Dimension(1000, 80));
 
-        btn_them.setBackground(new java.awt.Color(255, 255, 255));
         btn_them.setText("Thêm");
         btn_them.setFocusable(false);
+        btn_them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_themActionPerformed(evt);
+            }
+        });
         panel_control.add(btn_them);
 
-        btn_sua.setBackground(new java.awt.Color(255, 255, 255));
         btn_sua.setText("Sửa");
         btn_sua.setFocusable(false);
         panel_control.add(btn_sua);
 
-        btn_xoa.setBackground(new java.awt.Color(255, 255, 255));
         btn_xoa.setText("Xóa");
         btn_xoa.setFocusable(false);
         panel_control.add(btn_xoa);
 
-        btn_chitiet.setBackground(new java.awt.Color(255, 255, 255));
         btn_chitiet.setText("Chi tiết");
         btn_chitiet.setFocusable(false);
+        btn_chitiet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_chitietActionPerformed(evt);
+            }
+        });
         panel_control.add(btn_chitiet);
 
         jLabel1.setText("Tìm kiếm");
@@ -76,7 +98,6 @@ public class PhieuNhap extends javax.swing.JPanel {
         txt_timkiem.setPreferredSize(new java.awt.Dimension(100, 30));
         panel_control.add(txt_timkiem);
 
-        btn_lammoi.setBackground(new java.awt.Color(255, 255, 255));
         btn_lammoi.setText("Làm mới");
         btn_lammoi.setFocusable(false);
         panel_control.add(btn_lammoi);
@@ -85,17 +106,17 @@ public class PhieuNhap extends javax.swing.JPanel {
 
         tbl_phieunhap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã", "Tên loại", "Title 3", "Title 4"
+                "Mã PN", "Mã NCC", "Mã Nhân Viên", "Ngày nhập", "Tổng tiền", "Trạng thái"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -107,6 +128,16 @@ public class PhieuNhap extends javax.swing.JPanel {
 
         add(jScrollPane2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
+       addPN = new ThemPNhap();
+       addPN.setVisible(true);
+    }//GEN-LAST:event_btn_themActionPerformed
+       
+    private void btn_chitietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chitietActionPerformed
+        chiTietPN = new ChiTietPNhap();
+        chiTietPN.setVisible(true);
+    }//GEN-LAST:event_btn_chitietActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

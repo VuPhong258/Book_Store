@@ -55,8 +55,8 @@ public class TaiKhoan extends javax.swing.JPanel {
                 taiKhoanDTO.getIdTaiKhoan(),
                 taiKhoanDTO.getTenDangNhap(),
                 taiKhoanDTO.getMatKhau(),
-                taiKhoanDTO.getIdNhanVien(),
-                taiKhoanDTO.getLoaiTaiKhoan()};
+                taiKhoanDTO.getTenQuyen(),
+                taiKhoanDTO.getIdNhanVien()};
             model.addRow(row);
         }
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -212,11 +212,11 @@ public class TaiKhoan extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Mã tài khoản", "Tên đăng nhâp", "Mật khẩu", "Loại tài khoản", "Id nhân viên"
+                "Mã tài khoản", "Tên đăng nhâp", "Mật khẩu", "Quyền", "Id nhân viên"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
