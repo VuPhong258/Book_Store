@@ -41,7 +41,8 @@ public class TaiKhoanDAO {
                     String matkhau = rs.getString("matkhau");
                     int loaitaikhoan = rs.getInt("loaitaikhoan");
                     int trangthai = rs.getInt("trangthai");
-                    TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau, idNhanVien, loaitaikhoan, trangthai );
+                    //SỬA THỨ TỰ CONSTRUCTOR
+                    TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau, loaitaikhoan, idNhanVien, trangthai );
                     result.add(tkDTO);
                     
                 }

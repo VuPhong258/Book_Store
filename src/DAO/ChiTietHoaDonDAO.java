@@ -59,7 +59,7 @@ public class ChiTietHoaDonDAO {
                 int soluongmua = rs.getInt("soluongmua");
                 int id_sach = rs.getInt("id_sach");
                 String tongtien = rs.getString("giaban");
-                ChiTietHoaDonDTO ctpn = new ChiTietHoaDonDTO(idHoaDon, soluongmua, id_sach, tongtien);
+                ChiTietHoaDonDTO ctpn = new ChiTietHoaDonDTO(idHoaDon, id_sach, soluongmua, tongtien);      //sửa thứ tự
                 result.add(ctpn);;
             }
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class ChiTietHoaDonDAO {
         for (int i = 0; i < listcthd.size(); i++) {
             try {
                 connect = MySQLConnection.getConnection();
-                String sql = "INSERT INTO `tbl_chitiethoadon`(`id_hoadon`, `soluongmua`, `id_sach`, `giaban`) VALUES (?,?,?,?)";
+                String sql = "INSERT INTO `tbl_chitiethoadon`(`id_hoadon`, `id_sach`, `soluongmua`, `giaban`) VALUES (?,?,?,?)";
                 pst = (PreparedStatement) connect.prepareStatement(sql);
                 pst.setInt(1, listcthd.get(i).getIdHoaDon());
                 pst.setInt(2, listcthd.get(i).getIdSach());

@@ -20,6 +20,10 @@ public class HoaDonBUS {
                 this.hoaDonList = hdDAO.getAllHoaDon();
             }
             
+            public HoaDonDAO getHdDAO(){
+                return this.hdDAO;
+            }
+            
             public ArrayList<HoaDonDTO> getAll(){ 
                 return this.hoaDonList;
             }

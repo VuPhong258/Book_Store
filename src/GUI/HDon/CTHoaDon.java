@@ -5,9 +5,12 @@
 package GUI.HDon;
 
 import BUS.SanPhamBUS;
+import DTO.SanPhamDTO;
 import DTO.ChiTietHoaDonDTO;
 import GUI.HoaDon;
 import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.SwingConstants;
@@ -21,33 +24,39 @@ public class CTHoaDon extends javax.swing.JFrame {
      */
     
     private javax.swing.JFrame parentFrame;
+    private ArrayList<ChiTietHoaDonDTO> listCTHD = new ArrayList<>();
     
     public CTHoaDon(){
         initComponents();
     }
     
-    public CTHoaDon(javax.swing.JFrame parentFrame, ArrayList<ChiTietHoaDonDTO> listCTHD) {
+    public CTHoaDon(javax.swing.JFrame parentFrame, ArrayList<ChiTietHoaDonDTO> listCTHD) { //xem chi tiết hóa đơn chưa tạo
         initComponents();
         hienThiListChiTiet(listCTHD);
         this.parentFrame = parentFrame;
         this.parentFrame.setVisible(false);
+        this.listCTHD = listCTHD;
     }
 
-    public CTHoaDon(ArrayList<ChiTietHoaDonDTO> listCTHD) {
+    public CTHoaDon(ArrayList<ChiTietHoaDonDTO> listCTHD) {             //nếu đây là xem chi tiết hóa đơn đã tạo
         initComponents();
+        btn_sua.setEnabled(false);
+        btn_xoa.setEnabled(false);
         hienThiListChiTiet(listCTHD);
+        this.listCTHD = listCTHD;
     }
     
-    private void hienThiListChiTiet(ArrayList<ChiTietHoaDonDTO> listCTHD){
+    private void hienThiListChiTiet(ArrayList<ChiTietHoaDonDTO> listCTHD){  //sửa 2 cột sau
         DefaultTableModel model = (DefaultTableModel) tbl_ctHD.getModel();
-        String tongTien = HoaDon.tinhTongTien(listCTHD);
         model.setRowCount(0);
         for (ChiTietHoaDonDTO cthdDTO : listCTHD){
+            SanPhamDTO spDTO = new SanPhamBUS().selectByID(cthdDTO.getIdSach());
+            cthdDTO.setGiaBan();
             Object [] row = {
-                new SanPhamBUS().selectByID(cthdDTO.getIdSach()).getTenSanPham(),
-                cthdDTO.getSoLuongMua(),
-                cthdDTO.getGiaBan(),
-                tongTien
+                spDTO.getTenSanPham(),          //D
+                cthdDTO.getSoLuongMua(),         //D    
+                spDTO.getDonGia(),          //giá 1 quyển
+                cthdDTO.getGiaBan()         //giá quyển * số lượng
             };
             model.addRow(row);
         }
@@ -108,8 +117,18 @@ public class CTHoaDon extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl_ctHD);
 
         btn_sua.setText("Sửa số lượng");
+        btn_sua.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_suaMouseClicked(evt);
+            }
+        });
 
         btn_xoa.setText("Xóa");
+        btn_xoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_xoaMouseClicked(evt);
+            }
+        });
 
         btn_xong.setText("Xong");
         btn_xong.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -179,6 +198,8 @@ public class CTHoaDon extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void btn_xongMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_xongMousePressed
         try {
             this.parentFrame.setVisible(true);
@@ -188,6 +209,53 @@ public class CTHoaDon extends javax.swing.JFrame {
             this.dispose();
         }    
     }//GEN-LAST:event_btn_xongMousePressed
+       
+    //sửa số lượng
+    private void btn_suaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_suaMouseClicked
+        try {
+            int slctedRow = tbl_ctHD.getSelectedRow();
+            int soLuong = (Integer) tbl_ctHD.getValueAt(slctedRow, 1);
+
+                int soLuongMoi = Integer.parseInt(JOptionPane.showInputDialog("Nhập số lượng mới", soLuong));
+                if (soLuongMoi > 0) {
+                    this.listCTHD.get(slctedRow).setSoLuongMua(soLuongMoi);
+                    tbl_ctHD.setValueAt(soLuongMoi, slctedRow, 1);
+                    this.listCTHD.get(slctedRow).setGiaBan();
+                    hienThiListChiTiet(listCTHD);
+    //                tbl_ctHD.setValueAt(this.listCTHD.get(slctedRow).getGiaBan(), slctedRow, 3);
+                    JOptionPane.showMessageDialog(null, "Sửa thành công");
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Sửa thất bại");
+                }
+            }      
+        catch(Exception e) {
+            JOptionPane.showMessageDialog(null, "Sửa thất bại");
+        }
+    }//GEN-LAST:event_btn_suaMouseClicked
+
+    private void btn_xoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_xoaMouseClicked
+        try{    
+            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa?");
+            if (confirm == JOptionPane.YES_OPTION) {
+                Iterator it = this.listCTHD.iterator();
+                int slctedRow = tbl_ctHD.getSelectedRow();
+                String tenSach = (String) tbl_ctHD.getValueAt(slctedRow, 0); //lấy tên sách
+                while (it.hasNext()) {
+                    ChiTietHoaDonDTO cthd = (ChiTietHoaDonDTO) it.next();
+                    String tSach = new SanPhamBUS().selectByID(cthd.getIdSach()).getTenSanPham();
+                    if (tSach.equals(tenSach)) {
+                        it.remove();
+                        hienThiListChiTiet(this.listCTHD);
+                        break;
+                    }
+                }
+            }   
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Xóa thất bại");
+        }
+    }//GEN-LAST:event_btn_xoaMouseClicked
 
     /**
      * @param args the command line arguments

@@ -4,15 +4,22 @@
  */
 package GUI.HDon;
 
+import BUS.ChiTietHoaDonBUS;
 import BUS.HoaDonBUS;
+import BUS.KhachHangBUS;
 import BUS.SanPhamBUS;
+import BUS.TaiKhoanBUS;
 import DTO.ChiTietHoaDonDTO;
+import DTO.HoaDonDTO;
+import DTO.KhachHangDTO;
 import DTO.SanPhamDTO;
+import DTO.TaiKhoanDTO;
 import java.awt.event.KeyEvent;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
@@ -20,28 +27,52 @@ import javax.swing.JTextField;
  * @author Administrator
  */
 public class ThemHD extends javax.swing.JFrame {
+    private final int maHD = new HoaDonBUS().getAll().size() + 1;
     private ArrayList<ChiTietHoaDonDTO> listCTHD = new ArrayList<>();
+    private ArrayList<SanPhamDTO> listSanPham = new ArrayList<>();
     /**
      * Creates new form ThemHD
      */
     public ThemHD() {
         initComponents();
         initComponentsValue();
+        loadCboxNhanVien();
+        loadCboxKhachHang();
     }
     
     private void initComponentsValue(){
-        txt_maHD.setText(Integer.toString(new HoaDonBUS().getAll().size() + 1));
-        LocalDate ngayTao = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        txt_ngayLap.setText(ngayTao.format(formatter));
+        txt_maHD.setText(Integer.toString(maHD));
+        
+        LocalDateTime ngayTao = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        txt_ngayLap.setText(ngayTao.format(formatter));             //TODO
+    }
+    
+    private void loadCboxNhanVien(){
+        TaiKhoanBUS tkBUS = new TaiKhoanBUS();
+        for (TaiKhoanDTO tkDTO : tkBUS.getAll()) {
+            cbox_NhanVien.addItem(tkDTO.getIdNhanVien() + " - " + tkDTO.getTenDangNhap());
+        }
+    }
+    
+    private void loadCboxKhachHang(){
+        KhachHangBUS khBUS = new KhachHangBUS();
+        for (KhachHangDTO khDTO : khBUS.getAll()) {
+            cbox_KhachHang.addItem(khDTO.getIdKhachHang() + " - " + khDTO.getHoTen());
+        }
     }
     
     private void loadCboxSach(String keyword) {         //cbox_sach
         SanPhamBUS sanPhamBus = new SanPhamBUS();
         cbox_sach.removeAllItems();
-        for (SanPhamDTO sp : sanPhamBus.getAll()) {           
-            if (sp.getTenSanPham().toUpperCase().contains(keyword.toUpperCase())) {                    
+        for (SanPhamDTO sp : sanPhamBus.getAll()) {  
+            if(keyword.equals("*")){
                 cbox_sach.addItem(sp.getTenSanPham());
+                this.listSanPham.add(sp);
+            }
+            else if (sp.getTenSanPham().toUpperCase().contains(keyword.toUpperCase())) {                    
+                cbox_sach.addItem(sp.getTenSanPham());
+                this.listSanPham.add(sp);
             }
         }    
     }
@@ -64,11 +95,9 @@ public class ThemHD extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txt_tenKH = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txt_maHD = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txt_maNV = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txt_ngayLap = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -79,6 +108,8 @@ public class ThemHD extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_timSach = new javax.swing.JTextPane();
         btn_timSach = new javax.swing.JButton();
+        cbox_NhanVien = new javax.swing.JComboBox<>();
+        cbox_KhachHang = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -105,9 +136,25 @@ public class ThemHD extends javax.swing.JFrame {
                 .addGap(0, 10, Short.MAX_VALUE))
         );
 
+        pnl_lower.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                pnl_lowerMouseMoved(evt);
+            }
+        });
+        pnl_lower.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                pnl_lowerFocusGained(evt);
+            }
+        });
+
         spnr_soLuong.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         btn_themSach.setText("Thêm");
+        btn_themSach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_themSachMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Chọn sách");
@@ -118,10 +165,6 @@ public class ThemHD extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Tên khách hàng");
 
-        txt_tenKH.setMinimumSize(new java.awt.Dimension(247, 32));
-        txt_tenKH.setName(""); // NOI18N
-        txt_tenKH.setPreferredSize(new java.awt.Dimension(73, 32));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Mã hóa đơn");
 
@@ -130,8 +173,6 @@ public class ThemHD extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Mã nhân viên xử lý");
-
-        txt_maNV.setPreferredSize(new java.awt.Dimension(64, 32));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Ngày lập");
@@ -154,10 +195,20 @@ public class ThemHD extends javax.swing.JFrame {
         });
 
         btn_themHD.setText("Thêm");
+        btn_themHD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_themHDMouseClicked(evt);
+            }
+        });
 
         btn_huyHD.setText("Hủy");
+        btn_huyHD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_huyHDMouseClicked(evt);
+            }
+        });
 
-        txt_timSach.setText("Nhập tên sách cần tìm");
+        txt_timSach.setText("*");
         jScrollPane1.setViewportView(txt_timSach);
 
         btn_timSach.setText("Tìm");
@@ -174,18 +225,6 @@ public class ThemHD extends javax.swing.JFrame {
             .addGroup(pnl_lowerLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_lowerLayout.createSequentialGroup()
-                        .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(txt_maHD, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnl_lowerLayout.createSequentialGroup()
-                                .addComponent(txt_tenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_lowerLayout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(294, 294, 294))))
                     .addGroup(pnl_lowerLayout.createSequentialGroup()
                         .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -210,14 +249,28 @@ public class ThemHD extends javax.swing.JFrame {
                                     .addComponent(btn_timSach))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
-                    .addGroup(pnl_lowerLayout.createSequentialGroup()
-                        .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_maNV, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(txt_ngayLap, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_lowerLayout.createSequentialGroup()
+                        .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnl_lowerLayout.createSequentialGroup()
+                                .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txt_maHD, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(292, 292, 292)
+                                .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnl_lowerLayout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(cbox_KhachHang, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_lowerLayout.createSequentialGroup()
+                                .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnl_lowerLayout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(cbox_NhanVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(txt_ngayLap, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(27, 27, 27))))
             .addGroup(pnl_lowerLayout.createSequentialGroup()
                 .addGap(278, 278, 278)
@@ -234,9 +287,9 @@ public class ThemHD extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_tenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_maHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_maHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbox_KhachHang))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -244,9 +297,9 @@ public class ThemHD extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_lowerLayout.createSequentialGroup()
-                        .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_maNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_ngayLap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_ngayLap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbox_NhanVien))
                         .addGap(32, 32, 32)
                         .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -305,7 +358,6 @@ public class ThemHD extends javax.swing.JFrame {
     
     
     private void btn_timSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_timSachMouseClicked
-        // TODO add your handling code here:
         loadCboxSach(txt_timSach.getText());
     }//GEN-LAST:event_btn_timSachMouseClicked
 
@@ -318,6 +370,90 @@ public class ThemHD extends javax.swing.JFrame {
             ctHoaDon.setVisible(true);
         }        
     }//GEN-LAST:event_btn_xemCTMousePressed
+
+    private void btn_huyHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_huyHDMouseClicked
+        int result = JOptionPane.showConfirmDialog(rootPane, "Xác nhận hủy?");
+        if (result == JOptionPane.YES_OPTION) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_btn_huyHDMouseClicked
+
+    private boolean kiemTraCTHD(String s) {     //kiểm tra trùng trong CTHD
+        boolean flag = false;
+        for (ChiTietHoaDonDTO cthd : this.listCTHD) {
+            String tenSach = new SanPhamBUS().selectByID(cthd.getIdSach()).getTenSanPham();
+            if (s.equals(tenSach)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+    
+    private void btn_themSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_themSachMouseClicked
+        try { //tránh trường hợp bấm tìm luôn
+            String selectedBookName =  cbox_sach.getSelectedItem().toString();
+            int selectedAmount = (Integer) spnr_soLuong.getValue();
+            if(selectedBookName.isBlank()){
+                JOptionPane.showMessageDialog(null, "Chưa có sách nào được chọn");
+            }      
+            else if(this.kiemTraCTHD(selectedBookName)) {
+                JOptionPane.showMessageDialog(null, "Trong hóa đơn đã có sách này");
+            }
+            else {
+                for (SanPhamDTO sp : this.listSanPham) {
+                    if(sp.getTenSanPham().equals(selectedBookName)) {
+                        ChiTietHoaDonDTO ctHoaDon = new ChiTietHoaDonDTO(maHD, sp.getIdSanPham(), selectedAmount);
+                        ctHoaDon.setGiaBan();
+                        this.listCTHD.add(ctHoaDon);
+                        JOptionPane.showMessageDialog(null, "Thêm thành công " + selectedAmount + " bản của sách " + selectedBookName);
+                        txt_tongTien.setText(ChiTietHoaDonBUS.tinhTongTien(this.listCTHD));
+                    }
+                }
+            }
+        }
+        catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn sách trước khi thêm");
+        } 
+    }//GEN-LAST:event_btn_themSachMouseClicked
+
+    private void pnl_lowerMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_lowerMouseMoved
+        txt_tongTien.setText(ChiTietHoaDonBUS.tinhTongTien(this.listCTHD));
+    }//GEN-LAST:event_pnl_lowerMouseMoved
+
+    private void pnl_lowerFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pnl_lowerFocusGained
+        txt_tongTien.setText(ChiTietHoaDonBUS.tinhTongTien(this.listCTHD));
+    }//GEN-LAST:event_pnl_lowerFocusGained
+
+    private void btn_themHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_themHDMouseClicked
+        if(this.listCTHD.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Vui lòng không để trống thông tin");
+        }
+        else{
+            int idHD = this.maHD;
+            int idKH = Integer.parseInt(((String) cbox_KhachHang.getSelectedItem()).split("-")[0].trim());
+            int idNV = Integer.parseInt(((String) cbox_NhanVien.getSelectedItem()).split("-")[0].trim()); //split bằng - rồi trim khoảng trắng
+            String ngayLap = txt_ngayLap.getText();
+            String tongTien = txt_tongTien.getText();
+            int trangThai = 1;          //TODO CHANGE THIS
+            HoaDonDTO hoaDon = new HoaDonDTO(idHD, ngayLap, tongTien, idNV, idKH, trangThai);
+            HoaDonBUS hdBUS = new HoaDonBUS();
+            boolean flag_themHD = hdBUS.getHdDAO().addHoaDon(hoaDon);
+    //      ============================THÊM CHI TIẾT HĐ========================================
+            ChiTietHoaDonBUS cthdBUS = new ChiTietHoaDonBUS();
+            boolean flag_themCTHD = cthdBUS.getCthdDAO().addCTHD(this.listCTHD);
+            if(flag_themHD && flag_themCTHD) {
+                JOptionPane.showMessageDialog(null, "Thêm thành công");
+            }
+            else if (flag_themHD == false){
+                JOptionPane.showMessageDialog(null, "Đã có lỗi xảy ra trong quá trình thêm hóa đơn");
+            }
+            else if (flag_themCTHD == false){
+                JOptionPane.showMessageDialog(null, "Đã có lỗi xảy ra trong quá trình thêm chi tiết hóa đơn");
+            }
+            this.dispose();
+        }
+    }//GEN-LAST:event_btn_themHDMouseClicked
    
     /**
      * @param args the command line arguments
@@ -360,6 +496,8 @@ public class ThemHD extends javax.swing.JFrame {
     private javax.swing.JButton btn_themSach;
     private javax.swing.JButton btn_timSach;
     private javax.swing.JButton btn_xemCT;
+    private javax.swing.JComboBox<String> cbox_KhachHang;
+    private javax.swing.JComboBox<String> cbox_NhanVien;
     private javax.swing.JComboBox<String> cbox_sach;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -374,9 +512,7 @@ public class ThemHD extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_lower;
     private javax.swing.JSpinner spnr_soLuong;
     private javax.swing.JTextField txt_maHD;
-    private javax.swing.JTextField txt_maNV;
     private javax.swing.JTextField txt_ngayLap;
-    private javax.swing.JTextField txt_tenKH;
     private javax.swing.JTextPane txt_timSach;
     private javax.swing.JTextField txt_tongTien;
     // End of variables declaration//GEN-END:variables
