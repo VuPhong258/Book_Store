@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import DTO.TaiKhoanDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,14 +29,16 @@ public class Main extends javax.swing.JFrame {
     TaiKhoan taiKhoan;
     HoaDon hoaDon;
     KhachHang khachHang;
-
+    TaiKhoanDTO tkDTO;
+    
     /**
      * Creates new form Main
      */
     private final Color defaultColor = new Color(255, 255, 255);
     private final Color hoverColor = new Color(187, 222, 251);
     Color BackgroundColor = new Color(240, 247, 250);
-    public Main() {
+    public Main(TaiKhoanDTO tkDTO) {
+        this.tkDTO = tkDTO;
         initComponents();
         setLocationRelativeTo(null);
         addHoverBtn();
@@ -53,14 +56,23 @@ public class Main extends javax.swing.JFrame {
            btn_taikhoan.setIcon(new FlatSVGIcon("./GUI/icon/taikhoan.svg"));
            btn_khachhang.setIcon(new FlatSVGIcon("./GUI/icon/customer.svg"));
            btn_thongke.setIcon(new FlatSVGIcon("./GUI/icon/thongke.svg"));
-           btn_dangxuat.setIcon(new FlatSVGIcon("./GUI/icon/dangxuat.svg"));
-           
-           
-
-        
+           btn_dangxuat.setIcon(new FlatSVGIcon("./GUI/icon/dangxuat.svg"));  
+        kiemTraQuyen();
     }
     
-    
+    private void kiemTraQuyen() {               //1 = admin = có tất cả quyền
+        if (this.tkDTO.getLoaiTaiKhoan() == 2) {        //nếu là QL nhập
+            btn_hoadon.setEnabled(false);
+            btn_taikhoan.setEnabled(false);
+            btn_khachhang.setEnabled(false);
+            btn_thongke.setEnabled(false);
+        }
+        else if (this.tkDTO.getLoaiTaiKhoan() == 3) {   //nếu là NV bán hàng
+            btn_taikhoan.setEnabled(false);
+            btn_nhacungcap.setEnabled(false);
+            btn_phieunhap.setEnabled(false);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -372,7 +384,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_phieunhapActionPerformed
 
     private void btn_hoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hoadonActionPerformed
-         hoaDon = new HoaDon();
+         hoaDon = new HoaDon(this.tkDTO);
        addTaskBar(mainContent, hoaDon);
     }//GEN-LAST:event_btn_hoadonActionPerformed
 

@@ -28,7 +28,7 @@ public class TaiKhoanDTO {
             this.idNhanVien = idNhanVien;
             this.trangthai = trangthai;
         }
-        
+//        TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau, idNhanVien, loaitaikhoan );
          public TaiKhoanDTO(int idTaiKhoan, String tendangnhap, String matkhau, int loaitaikhoan, int idNhanVien){
             this.idTaiKhoan = idTaiKhoan;
             this.tendangnhap = tendangnhap;

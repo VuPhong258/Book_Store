@@ -30,30 +30,32 @@ public class ThemHD extends javax.swing.JFrame {
     private final int maHD = new HoaDonBUS().getAll().size() + 1;
     private ArrayList<ChiTietHoaDonDTO> listCTHD = new ArrayList<>();
     private ArrayList<SanPhamDTO> listSanPham = new ArrayList<>();
+    private TaiKhoanDTO nhanVien;
     /**
      * Creates new form ThemHD
      */
-    public ThemHD() {
+    public ThemHD(TaiKhoanDTO nhanVien) {
+        this.nhanVien = nhanVien;
         initComponents();
         initComponentsValue();
-        loadCboxNhanVien();
+//        loadCboxNhanVien();
         loadCboxKhachHang();
     }
     
     private void initComponentsValue(){
         txt_maHD.setText(Integer.toString(maHD));
-        
+        txt_nhanVien.setText(this.nhanVien.getIdNhanVien() + " - " + this.nhanVien.getTenDangNhap());
         LocalDateTime ngayTao = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         txt_ngayLap.setText(ngayTao.format(formatter));             //TODO
     }
     
-    private void loadCboxNhanVien(){
-        TaiKhoanBUS tkBUS = new TaiKhoanBUS();
-        for (TaiKhoanDTO tkDTO : tkBUS.getAll()) {
-            cbox_NhanVien.addItem(tkDTO.getIdNhanVien() + " - " + tkDTO.getTenDangNhap());
-        }
-    }
+//    private void loadCboxNhanVien(){
+//        TaiKhoanBUS tkBUS = new TaiKhoanBUS();
+//        for (TaiKhoanDTO tkDTO : tkBUS.getAll()) {
+//            cbox_NhanVien.addItem(tkDTO.getIdNhanVien() + " - " + tkDTO.getTenDangNhap());
+//        }
+//    }
     
     private void loadCboxKhachHang(){
         KhachHangBUS khBUS = new KhachHangBUS();
@@ -108,8 +110,8 @@ public class ThemHD extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_timSach = new javax.swing.JTextPane();
         btn_timSach = new javax.swing.JButton();
-        cbox_NhanVien = new javax.swing.JComboBox<>();
         cbox_KhachHang = new javax.swing.JComboBox<>();
+        txt_nhanVien = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -218,6 +220,8 @@ public class ThemHD extends javax.swing.JFrame {
             }
         });
 
+        txt_nhanVien.setEnabled(false);
+
         javax.swing.GroupLayout pnl_lowerLayout = new javax.swing.GroupLayout(pnl_lower);
         pnl_lower.setLayout(pnl_lowerLayout);
         pnl_lowerLayout.setHorizontalGroup(
@@ -266,7 +270,7 @@ public class ThemHD extends javax.swing.JFrame {
                                     .addGroup(pnl_lowerLayout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(cbox_NhanVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(txt_nhanVien))
                                 .addGap(18, 18, 18)
                                 .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
@@ -299,7 +303,7 @@ public class ThemHD extends javax.swing.JFrame {
                     .addGroup(pnl_lowerLayout.createSequentialGroup()
                         .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_ngayLap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbox_NhanVien))
+                            .addComponent(txt_nhanVien))
                         .addGap(32, 32, 32)
                         .addGroup(pnl_lowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -431,8 +435,8 @@ public class ThemHD extends javax.swing.JFrame {
         }
         else{
             int idHD = this.maHD;
-            int idKH = Integer.parseInt(((String) cbox_KhachHang.getSelectedItem()).split("-")[0].trim());
-            int idNV = Integer.parseInt(((String) cbox_NhanVien.getSelectedItem()).split("-")[0].trim()); //split bằng - rồi trim khoảng trắng
+            int idKH = Integer.parseInt(((String) cbox_KhachHang.getSelectedItem()).split("-")[0].trim());//split bằng - rồi trim khoảng trắng
+            int idNV = Integer.parseInt(txt_nhanVien.getText().split("-")[0].trim());
             String ngayLap = txt_ngayLap.getText();
             String tongTien = txt_tongTien.getText();
             int trangThai = 1;          //TODO CHANGE THIS
@@ -497,7 +501,6 @@ public class ThemHD extends javax.swing.JFrame {
     private javax.swing.JButton btn_timSach;
     private javax.swing.JButton btn_xemCT;
     private javax.swing.JComboBox<String> cbox_KhachHang;
-    private javax.swing.JComboBox<String> cbox_NhanVien;
     private javax.swing.JComboBox<String> cbox_sach;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -513,6 +516,7 @@ public class ThemHD extends javax.swing.JFrame {
     private javax.swing.JSpinner spnr_soLuong;
     private javax.swing.JTextField txt_maHD;
     private javax.swing.JTextField txt_ngayLap;
+    private javax.swing.JTextField txt_nhanVien;
     private javax.swing.JTextPane txt_timSach;
     private javax.swing.JTextField txt_tongTien;
     // End of variables declaration//GEN-END:variables

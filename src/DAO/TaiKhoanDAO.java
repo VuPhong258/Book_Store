@@ -130,7 +130,7 @@ public class TaiKhoanDAO {
                 String tendangnhap = rs.getString("tendangnhap");
                 String matkhau = rs.getString("matkhau");
                 int loaitaikhoan = rs.getInt("loaitaikhoan");
-                 TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau, idNhanVien, loaitaikhoan );
+                TaiKhoanDTO tkDTO = new TaiKhoanDTO(idTaiKhoan, tendangnhap, matkhau, loaitaikhoan, idNhanVien);
                 result = tkDTO;
             }
             MySQLConnection.closeConnection(connect);

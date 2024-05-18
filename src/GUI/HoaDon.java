@@ -15,6 +15,7 @@ import GUI.HDon.CTHoaDon;
 import BUS.ChiTietHoaDonBUS;
 import DTO.ChiTietHoaDonDTO;
 import DTO.SanPhamDTO;
+import DTO.TaiKhoanDTO;
 
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -30,11 +31,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HoaDon extends javax.swing.JPanel {
     private ArrayList<HoaDonDTO> listHoaDon = (new HoaDonBUS()).getAll();
+    private TaiKhoanDTO nhanVien;
     /**
      * Creates new form SanPham
      */
-    public HoaDon() {
+    public HoaDon(TaiKhoanDTO nhanVien) {
         initComponents();
+        this.nhanVien = nhanVien;
         btn_them.setIcon(new FlatSVGIcon("./GUI/icon/add.svg"));
         btn_sua.setIcon(new FlatSVGIcon("./GUI/icon/edit.svg"));
         btn_xoa.setIcon(new FlatSVGIcon("./GUI/icon/delete.svg"));
@@ -209,7 +212,7 @@ public class HoaDon extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_chitietMouseClicked
 
     private void btn_themMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_themMouseClicked
-        ThemHD themHD = new ThemHD();
+        ThemHD themHD = new ThemHD(this.nhanVien);
         themHD.setVisible(true);
     }//GEN-LAST:event_btn_themMouseClicked
 
