@@ -9,7 +9,7 @@ package DTO.ThongKe;
  * @author Acer
  */
 public class ThongKeDoanhThuDTO {
-     String  thoigian; // nam, thang, ngay
+    int  thoigian; // nam, thang, ngay
     Long von;
     Long doanhthu;
     Long loinhuan;
@@ -17,18 +17,18 @@ public class ThongKeDoanhThuDTO {
     public ThongKeDoanhThuDTO() {
     }
     
-    public ThongKeDoanhThuDTO(String thoigian, Long von, Long doanhthu, Long loinhuan) {
+    public ThongKeDoanhThuDTO(int thoigian, Long von, Long doanhthu, Long loinhuan) {
         this.thoigian = thoigian;
         this.von = von;
         this.doanhthu = doanhthu;
         this.loinhuan = loinhuan;
     }
     
-    public String getThoigian() {
+    public int getThoigian() {
         return thoigian;
     }
 
-    public void setThoigian(String thoigian) {
+    public void setThoigian(int thoigian) {
         this.thoigian = thoigian;
     }
 

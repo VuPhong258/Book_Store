@@ -3,21 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/PhieuNhap.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/Main.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/TaiKhoan.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DAO/TaiKhoanDAO.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/BUS/PhieuNhapBUS.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/BUS/TaiKhoanBUS.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DAO/QuyenDAO.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/TKhoan/SuaTK.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DTO/TaiKhoanDTO.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DAO/PhieuNhapDAO.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/Login.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/BUS/QuyenBUS.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DTO/QuyenDTO.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/TKhoan/ThemTK.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DAO/ChiTietPhieuNhapDAO.java</file>
+            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DTO/ThongKe/ThongKeTonKhoDTO.java</file>
+            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/ThongKe.java</file>
+            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DAO/ThongKeDAO.java</file>
+            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/BUS/ThongKeBUS.java</file>
         </group>
     </open-files>
 </project-private>
