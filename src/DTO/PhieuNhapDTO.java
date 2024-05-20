@@ -4,10 +4,8 @@
  */
 package DTO;
 
-/**
- *
- * @author Acer
- */
+import java.util.ArrayList;
+
 public class PhieuNhapDTO {
 
     private int id_phieunhap;
@@ -16,6 +14,9 @@ public class PhieuNhapDTO {
     private int id_nhanvien; 
     private String tongtien;
     private int trangthai;
+
+    public PhieuNhapDTO() {
+    }
 
     public PhieuNhapDTO(int id_phieunhap, String ngaynhap, int id_ncc, int id_nhanvien, String tongtien, int trangthai) {
         this.id_phieunhap = id_phieunhap;
@@ -26,15 +27,12 @@ public class PhieuNhapDTO {
         this.trangthai = trangthai;
     }
     
-    public PhieuNhapDTO(int id_phieunhap, String ngaynhap, int id_ncc, int id_nhanvien, String tongtien) {
-        this.id_phieunhap = id_phieunhap;
+    public PhieuNhapDTO(String ngaynhap, int id_ncc, int id_nhanvien, String tongtien, int trangthai) {    
         this.ngaynhap = ngaynhap;
         this.id_ncc = id_ncc;
         this.id_nhanvien = id_nhanvien;
         this.tongtien = tongtien;
-    }
-
-    public PhieuNhapDTO() {
+        this.trangthai = trangthai;
     }
 
     public int getIdPhieuNhap() {

@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
-
-import BUS.TaiKhoanBUS;
-import DAO.TaiKhoanDAO;
+import DTO.TaiKhoanDTO;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,32 +14,29 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
-import DTO.TaiKhoanDTO;
-import java.util.ArrayList;
 
 /**
  *
  * @author Acer
  */
 public class Main extends javax.swing.JFrame {
-    
     TrangChu trangChu;
     SanPham sanPham;
     TacGia tacGia;
     NhaCungCap nhaCungCap;
     PhieuNhap phieuNhap;
     TaiKhoan taiKhoan;
-    HoaDon hoaDon;
+//    HoaDon hoaDon;
     KhachHang khachHang;
-    ThongKe thongKe;
-
+    TaiKhoanDTO tkDTO;
     /**
      * Creates new form Main
      */
     private final Color defaultColor = new Color(255, 255, 255);
     private final Color hoverColor = new Color(187, 222, 251);
     Color BackgroundColor = new Color(240, 247, 250);
-    public Main() {
+    public Main(TaiKhoanDTO tkDTO) {
+        this.tkDTO = tkDTO;
         initComponents();
         setLocationRelativeTo(null);
         addHoverBtn();
@@ -61,10 +56,8 @@ public class Main extends javax.swing.JFrame {
            btn_thongke.setIcon(new FlatSVGIcon("./GUI/icon/thongke.svg"));
            btn_dangxuat.setIcon(new FlatSVGIcon("./GUI/icon/dangxuat.svg"));
            
-//           lbl_chucvu.setText(String.valueOf(taiKhoanDTO.getTenQuyen()));
-//           if(String.valueOf(taiKhoanDTO.getTenQuyen()).equalsIgnoreCase("Không có")) {
-//               lbl_chucvu.setText("Khách hàng");
-//           }
+           
+
         
     }
     
@@ -253,11 +246,6 @@ public class Main extends javax.swing.JFrame {
         buttonGroup1.add(btn_thongke);
         btn_thongke.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_thongke.setText("Thống kê");
-        btn_thongke.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_thongkeActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout taskBarLayout = new javax.swing.GroupLayout(taskBar);
         taskBar.setLayout(taskBarLayout);
@@ -380,13 +368,13 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_tacgiaActionPerformed
 
     private void btn_phieunhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_phieunhapActionPerformed
-        phieuNhap =  new PhieuNhap();
+        phieuNhap =  new PhieuNhap(this.tkDTO);
         addTaskBar(mainContent, phieuNhap);
     }//GEN-LAST:event_btn_phieunhapActionPerformed
 
     private void btn_hoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hoadonActionPerformed
-         hoaDon = new HoaDon();
-       addTaskBar(mainContent, hoaDon);
+//         hoaDon = new HoaDon();
+//       addTaskBar(mainContent, hoaDon);
     }//GEN-LAST:event_btn_hoadonActionPerformed
 
     private void btn_nhacungcapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nhacungcapActionPerformed
@@ -409,11 +397,6 @@ public class Main extends javax.swing.JFrame {
         khachHang = new KhachHang();
         addTaskBar(mainContent, khachHang);
     }//GEN-LAST:event_btn_khachhangActionPerformed
-
-    private void btn_thongkeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thongkeActionPerformed
-        thongKe = new ThongKe();
-        addTaskBar(mainContent, thongKe);
-    }//GEN-LAST:event_btn_thongkeActionPerformed
 
     /**
      * @param args the command line arguments

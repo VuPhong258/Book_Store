@@ -62,7 +62,7 @@ public class Login extends javax.swing.JFrame {
             return;
         } else {
             this.dispose();
-            main = new Main();
+            main = new Main(taiKhoan);
             main.setVisible(true);
         }
     }

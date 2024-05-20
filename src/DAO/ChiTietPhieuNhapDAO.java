@@ -5,6 +5,7 @@
 package DAO;
 
 import DTO.ChiTietPhieuNhapDTO;
+import com.mysql.jdbc.Statement;
 import java.sql.Connection;
 import config.MySQLConnection;
 import java.sql.PreparedStatement;
@@ -30,16 +31,17 @@ public class ChiTietPhieuNhapDAO {
         ArrayList<ChiTietPhieuNhapDTO> result = new ArrayList<>();
         try {
             connect =MySQLConnection.getConnection();
-            String query = "SELECT * FROM ctphieunhap WHERE id_phieunhap =?";
+            String query = "SELECT * FROM tbl_chitietphieunhap WHERE id_phieunhap =?";
             pst =connect.prepareStatement(query);
             pst.setInt(1, id_pn);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while(rs.next()){
                 int id_phieunhap = rs.getInt("id_phieunhap");
                 int id_sach = rs.getInt("id_sach");
+                String tensach = rs.getString("tensach");
+                String gianhap = rs.getString("gianhap");
                 int soluongnhap = rs.getInt("soluongnhap");
-                String gianhap = rs.getString("gianhap");   
-                ChiTietPhieuNhapDTO ctpn = new ChiTietPhieuNhapDTO(id_phieunhap, id_sach, soluongnhap, gianhap);
+                ChiTietPhieuNhapDTO ctpn = new ChiTietPhieuNhapDTO(id_phieunhap, id_sach,tensach, gianhap, soluongnhap);
                 result.add(ctpn);
             }
         } catch (Exception e) {
@@ -58,9 +60,11 @@ public class ChiTietPhieuNhapDAO {
             while(rs.next()){
                 int id_phieunhap = rs.getInt("id_phieunhap");
                 int id_sach = rs.getInt("id_sach");
+                String tensach = rs.getString("tensach"); 
+                String gianhap = rs.getString("gianhap"); 
                 int soluongnhap = rs.getInt("soluongnhap");
-                String gianhap = rs.getString("gianhap");   
-                ChiTietPhieuNhapDTO ctpn = new ChiTietPhieuNhapDTO(id_phieunhap, id_sach, soluongnhap, gianhap);
+                  
+                ChiTietPhieuNhapDTO ctpn = new ChiTietPhieuNhapDTO(id_phieunhap, id_sach, tensach, gianhap,soluongnhap);
                 result.add(ctpn);
             }
         } catch (Exception e) {
@@ -69,27 +73,43 @@ public class ChiTietPhieuNhapDAO {
         return result;
     }
     
-    public boolean themCtpn(ArrayList<ChiTietPhieuNhapDTO> ctpnList) {
-        boolean status  = false;
+    public boolean addChiTietPhieuNhap(ArrayList<ChiTietPhieuNhapDTO> ctpnList) {
+    boolean status = false;
+    Connection connect = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    try {
+        connect = MySQLConnection.getConnection();
+        String sql = "INSERT INTO `tbl_chitietphieunhap`(`id_phieunhap`, `id_sach`, `tensach`, `gianhap`, `soluongnhap`) VALUES (?, ?, ?, ?, ?)";
         for (int i = 0; i < ctpnList.size(); i++) {
-            try {
-                connect = MySQLConnection.getConnection();
-                String sql = "INSERT INTO `chitietphieunhap`(`id_phieunhap`, `id_sach`, `soluongnhap`, `gianhap`) VALUES (?,?,?,?)";
-                PreparedStatement pst = (PreparedStatement) connect.prepareStatement(sql);
-                pst.setInt(1, ctpnList.get(i).getIdPhieuNhap());
-                pst.setInt(2, ctpnList.get(i).getIdSach());
-                pst.setInt(3, ctpnList.get(i).getSoLuongNhap());
-                pst.setString(4, ctpnList.get(i).getGiaNhap());
-                int allRow = pst.executeUpdate();
-                if (allRow > 0 ) {
-                    status = true;
-                }
-                MySQLConnection.closeConnection(connect);
-            } catch (SQLException ex) {
-                Logger.getLogger(ChiTietPhieuNhapDAO.class.getName()).log(Level.SEVERE, null, ex);
+            // Execute query to get the last inserted id
+            pst = connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pst.setInt(1, ctpnList.get(i).getIdPhieuNhap());
+            pst.setInt(2, ctpnList.get(i).getIdSach());
+            pst.setString(3, ctpnList.get(i).getTenSach());
+            pst.setString(4, ctpnList.get(i).getGiaNhap());
+            pst.setInt(5, ctpnList.get(i).getSoLuongNhap());
+            int affectedRows = pst.executeUpdate();
+            if (affectedRows > 0) {
+                status = true;
+                SanPhamDAO.getInstance().tangSoLuong(ctpnList.get(i).getIdPhieuNhap(), ctpnList.get(i).getSoLuongNhap());
+            } else {
+                status = false;
+                break; // Stop the loop if any insertion fails
             }
-            SanPhamDAO.getInstance().tangSoLuong(ctpnList.get(i).getIdPhieuNhap(), ctpnList.get(i).getSoLuongNhap());
         }
-        return status;
+    } catch (SQLException ex) {
+        Logger.getLogger(ChiTietPhieuNhapDAO.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pst != null) pst.close();
+            MySQLConnection.closeConnection(connect);
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiTietPhieuNhapDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    return status;
+}
+
 }

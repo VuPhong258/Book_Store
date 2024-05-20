@@ -4,6 +4,8 @@
  */
 package DTO;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Acer
@@ -11,16 +13,19 @@ package DTO;
 public class ChiTietPhieuNhapDTO {
     private int id_phieunhap;
     private int id_sach;
+    private String tensach;
     private int soluongnhap;
     private String gianhap;
-
-    public ChiTietPhieuNhapDTO(int id_phieunhap, int id_sach, int soluongnhap, String gianhap) {
+    
+    public ChiTietPhieuNhapDTO(int id_phieunhap, int id_sach,String tensach, String gianhap,int soluongnhap) {
         this.id_phieunhap = id_phieunhap;
         this.id_sach = id_sach;
-        this.soluongnhap = soluongnhap;
+        this.tensach=tensach;
         this.gianhap = gianhap;
+        this.soluongnhap = soluongnhap;
     }
-
+     
+    
     public ChiTietPhieuNhapDTO() {
     }
 
@@ -39,7 +44,9 @@ public class ChiTietPhieuNhapDTO {
     public void setGiaNhap(String gianhap) {
         this.gianhap = gianhap;
     }
-
+    public void setTenSach(String tensach) {
+        this.tensach = tensach;
+    }
     public int getIdPhieuNhap() {
         return id_phieunhap;
     }
@@ -55,5 +62,7 @@ public class ChiTietPhieuNhapDTO {
     public String getGiaNhap() {
         return gianhap;
     }
-
+    public String getTenSach() {
+        return tensach;
+    }
 }

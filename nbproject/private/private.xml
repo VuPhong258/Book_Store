@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DTO/ThongKe/ThongKeTonKhoDTO.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/ThongKe.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DAO/ThongKeDAO.java</file>
-            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/BUS/ThongKeBUS.java</file>
+            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/PhieuNhap.java</file>
+            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/PNhap/ThemPNhap.java</file>
+            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/GUI/PNhap/ChiTietPNhap.java</file>
+            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DTO/ChiTietPhieuNhapDTO.java</file>
+            <file>file:/D:/tai%20lieu%20hk2/tai%20lieu%20java/Project_java/Book_Store/src/DAO/ChiTietPhieuNhapDAO.java</file>
         </group>
     </open-files>
 </project-private>
