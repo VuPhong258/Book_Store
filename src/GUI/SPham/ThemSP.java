@@ -35,6 +35,12 @@ public class ThemSP extends javax.swing.JFrame {
     }
     
     public SanPhamDTO getNewSP(){
+         String namesach = txt_namesach.getText();
+         String nametacgia = txt_nametacgia.getText();
+         String giasach = txt_price.getText();
+         int soluong = Integer.parseInt(txt_quantity.getText());
+         String loai = txt_loai.getText();
+         String tenhinhanh = txt_namehinhanh.getText();
          if(txt_namesach.getText().isEmpty()){
            showMessage("Vui lòng không để trống tên sách");
         }
@@ -49,17 +55,9 @@ public class ThemSP extends javax.swing.JFrame {
            showMessage("Vui lòng không để trống thể loại sách");
         } else if (txt_namehinhanh.getText().isEmpty()){
            showMessage("Vui lòng không để trống tên hình ảnh");
-
+        } else {
+             sanPhamDTO = new SanPhamDTO(namesach, nametacgia, giasach, soluong, loai,tenhinhanh);
         }
-         
-         String namesach = txt_namesach.getText();
-         String nametacgia = txt_nametacgia.getText();
-         String giasach = txt_price.getText();
-         int soluong = Integer.parseInt(txt_quantity.getText());
-         String loai = txt_loai.getText();
-         String tenhinhanh = txt_namehinhanh.getText();
-         
-         sanPhamDTO = new SanPhamDTO(namesach, nametacgia, giasach, soluong, loai,tenhinhanh);
          return sanPhamDTO;
         
     }
@@ -90,6 +88,7 @@ public class ThemSP extends javax.swing.JFrame {
            if (!isValidData()){
                return;
            }
+           try {
         SanPhamDTO spNew = getNewSP();
         sanPhamBUS = new SanPhamBUS();
         boolean status = sanPhamBUS.addSanPham(spNew);
@@ -98,7 +97,11 @@ public class ThemSP extends javax.swing.JFrame {
             dispose();  
         } else {
             showMessage("Thêm sản phẩm thất bại");
+        } 
+           } catch (Exception ex) {
+            showMessage("Thêm sản phẩm thất bại do có textField bị bỏ trống");
         }
+           
     }
     public void showMessage(String message){
         JOptionPane.showMessageDialog(null, message);

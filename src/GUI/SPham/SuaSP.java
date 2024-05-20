@@ -75,6 +75,12 @@ public class SuaSP extends javax.swing.JFrame {
     
     
     public SanPhamDTO getNewSP(){
+         String namesach = txt_namesach.getText();
+         String nametacgia = txt_nametacgia.getText();
+         String giasach = txt_price.getText();
+         int soluong = Integer.parseInt(txt_quantity.getText());
+         String loai = txt_loai.getText();
+         String tenhinhanh = txt_namehinhanh.getText();
          if(txt_namesach.getText().isEmpty()){
            showMessage("Vui lòng không để trống tên sách");
         }
@@ -90,16 +96,13 @@ public class SuaSP extends javax.swing.JFrame {
         } else if (txt_namehinhanh.getText().isEmpty()){
            showMessage("Vui lòng không để trống tên hình ảnh");
 
+        } else {
+            sanPhamDTO = new SanPhamDTO(namesach, nametacgia, giasach, soluong, loai,tenhinhanh);
         }
          
-         String namesach = txt_namesach.getText();
-         String nametacgia = txt_nametacgia.getText();
-         String giasach = txt_price.getText();
-         int soluong = Integer.parseInt(txt_quantity.getText());
-         String loai = txt_loai.getText();
-         String tenhinhanh = txt_namehinhanh.getText();
+        
          
-         sanPhamDTO = new SanPhamDTO(namesach, nametacgia, giasach, soluong, loai,tenhinhanh);
+         
          return sanPhamDTO;
         
     }
@@ -149,7 +152,9 @@ public class SuaSP extends javax.swing.JFrame {
        private void SuaSanPham() throws IOException {
         if (!isValidData()) {
             return;
-        }
+        } 
+        try {
+
         // Nhận thông tin từ giao diện
         SanPhamDTO spNew = getNewSP();
         spNew.setIdSanPham(id_sach);
@@ -161,6 +166,9 @@ public class SuaSP extends javax.swing.JFrame {
         } else {
             showMessage("Sửa sản phẩm thất bại");
 
+        }
+        } catch (Exception ex) {
+            showMessage("Sửa sản phẩm thất bại do có textField bị bỏ trống");
         }
     }
     public void showMessage(String message){

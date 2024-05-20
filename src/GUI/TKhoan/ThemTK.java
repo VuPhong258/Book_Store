@@ -35,6 +35,10 @@ public class ThemTK extends javax.swing.JFrame {
     }
 
     private TaiKhoanDTO getNewTK (){
+        String username =  txt_name.getText();
+        String role = String.valueOf(cbb_role.getSelectedItem());
+        String password = txt_password.getText();
+        int id_nv =Integer.parseInt( txt_idnv.getText());
         if(txt_name.getText().isEmpty()){
            showMessage("Vui lòng không để trống tên đăng nhập");
         }
@@ -44,18 +48,11 @@ public class ThemTK extends javax.swing.JFrame {
 //        else if (txt_type.getText().isEmpty()){
 //           showMessage("Vui lòng không để trống loại tài khoản");}
         else if (txt_idnv.getText().isEmpty()){
-           showMessage("Vui lòng không để trống id nhân viên");
+           showMessage("Vui lòng không để trống ID nhân viên");
+        } else {
+              taiKhoanDTO = new TaiKhoanDTO(username, password, role, id_nv);
         }
-       
-        
-        String username =  txt_name.getText();
-//        int type =Integer.parseInt( txt_type.getText());
-        String role = String.valueOf(cbb_role.getSelectedItem());
-        String password = txt_password.getText();
-        int id_nv =Integer.parseInt( txt_idnv.getText());
-        
-        
-        taiKhoanDTO = new TaiKhoanDTO(username, password, role, id_nv);
+
         return taiKhoanDTO;
     }
     
@@ -123,7 +120,9 @@ public class ThemTK extends javax.swing.JFrame {
     private void addTaiKhoan() throws IOException {
         if (!isValidData()) {
         return;
-        }
+        } 
+        try {
+
         TaiKhoanDTO tkNew = getNewTK();
         taiKhoanBUS = new TaiKhoanBUS();
         boolean status = taiKhoanBUS.addTaiKhoan(tkNew);
@@ -132,6 +131,9 @@ public class ThemTK extends javax.swing.JFrame {
             dispose();  
         } else {
             showMessage("Thêm tài khoản thất bại");
+        } 
+        } catch (Exception ex) {
+            showMessage("Thêm tài khoản thất bại do có textField bị bỏ trống");
         }
     }
 

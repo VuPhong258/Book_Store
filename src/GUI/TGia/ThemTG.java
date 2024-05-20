@@ -32,17 +32,17 @@ public class ThemTG extends javax.swing.JFrame {
     }
 
     private TacGiaDTO getNewTG (){
+        String name =  txt_name.getText();
+        String year = txt_year.getText();
         if(txt_name.getText().isEmpty()){
            showMessage("Vui lòng không để trống tên tác giả");
         }
          else if (txt_year.getText().isEmpty()){
-           showMessage("Vui lòng không để trống năm");
+           showMessage("Vui lòng không để trống năm sinh");
+         } else {
+             tacGiaDTO = new TacGiaDTO(name,year);
          }
-       
-        String name =  txt_name.getText();
-        String year = txt_year.getText();
-        
-        tacGiaDTO = new TacGiaDTO(name,year);
+
         return tacGiaDTO;
     }
     
@@ -73,7 +73,8 @@ public class ThemTG extends javax.swing.JFrame {
         if (!isValidData()) {
         return;
         }
-        TacGiaDTO tkNew = getNewTG();
+        try {
+            TacGiaDTO tkNew = getNewTG();
         tacGiaBUS = new TacGiaBUS();
         boolean status = tacGiaBUS.addTacGia(tkNew);
         if (status) {
@@ -82,7 +83,11 @@ public class ThemTG extends javax.swing.JFrame {
         } else {
             showMessage("Thêm tác giả thất bại");
         }
-    }
+        } catch (Exception ex) {
+            showMessage("Thêm tác giả thất bại do có textField bị bỏ trống");
+        }
+    } 
+           
 
     
     public void showMessage(String message){

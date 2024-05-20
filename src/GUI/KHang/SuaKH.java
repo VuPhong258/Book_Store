@@ -67,7 +67,11 @@ public class SuaKH extends javax.swing.JFrame {
     }
 
     private KhachHangDTO getNewTK() {
-        
+        String name = txt_name.getText();
+        String year = txt_year.getText();
+        String phone = txt_phone.getText();
+        String address = txt_address.getText();
+        String email = txt_email.getText();
          if(txt_name.getText().isEmpty()){
            showMessage("Vui lòng không để trống họ tên khách hàng");
         }
@@ -79,14 +83,12 @@ public class SuaKH extends javax.swing.JFrame {
            showMessage("Vui lòng không để trống địa chỉ");
          } else if (txt_email.getText().isEmpty()){
            showMessage("Vui lòng không để trống email");
+         } else {
+              khachHangDTO = new KhachHangDTO(name, year,address,phone, email);
          }
         
-        String name = txt_name.getText();
-        String year = txt_year.getText();
-        String phone = txt_phone.getText();
-        String address = txt_address.getText();
-        String email = txt_email.getText();
-        khachHangDTO = new KhachHangDTO(name, year,address,phone, email);
+        
+       
         return khachHangDTO;
     }
 
@@ -137,6 +139,8 @@ public class SuaKH extends javax.swing.JFrame {
         if (!isValidData()) {
             return;
         }
+        try {
+            
         // Nhận thông tin từ giao diện
         KhachHangDTO tkNew = getNewTK();
         tkNew.setIdKhachHang(id_khachhang);
@@ -148,6 +152,9 @@ public class SuaKH extends javax.swing.JFrame {
         } else {
             showMessage("Sửa khách hàng thất bại");
 
+        } 
+        } catch (Exception ex) {
+            showMessage("Sửa khách hàng thất bại do có textField bị bỏ trống");
         }
     }
 

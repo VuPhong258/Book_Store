@@ -55,31 +55,26 @@ public class SuaTG extends javax.swing.JFrame {
         // Ví dụ: Xóa dữ liệu trên giao diện hoặc hiển thị thông báo
         txt_name.setText("");
         txt_year.setText("");
-        JOptionPane.showMessageDialog(this, "Không có thông tin nhà cung cấp để hiển thị", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Không có thông tin tác giả để hiển thị", "Thông báo", JOptionPane.WARNING_MESSAGE);
     }
 }
     
     private TacGiaDTO getNewTG() {
         String name = txt_name.getText();
         String year = txt_year.getText();
-        tacGiaDTO = new TacGiaDTO(name,year);
+        if(txt_name.getText().isEmpty()){
+           showMessage("Vui lòng không để trống tên tác giả");
+        }
+        else if (txt_year.getText().isEmpty()){
+           showMessage("Vui lòng không để trống năm sinh");
+        } else {
+             tacGiaDTO = new TacGiaDTO(name,year);
+        }
         return tacGiaDTO;
     }
 
-    private boolean isValidData() {
-        if(txt_name.getText().isEmpty()){
-           showMessage("Vui lòng không để trống tên nhà cung cấp");
-        }
-        else if (txt_year.getText().isEmpty()){
-           showMessage("Vui lòng không để trống địa chỉ");
-        }
-    return true;
-}
-    
     private void SuaTacGia() throws IOException {
-        if (!isValidData()) {
-        return;
-        }
+        try {
 // Nhận thông tin từ giao diện
         TacGiaDTO tgNew = getNewTG();
         tgNew.setTenTacGia(tentacgia);
@@ -90,7 +85,9 @@ public class SuaTG extends javax.swing.JFrame {
             dispose();
         } else {
             showMessage( "Sửa tác giả thất bại");
-          
+        }
+        } catch (Exception ex) {
+            showMessage("Sửa tác giả thất bại do có textField bị bỏ trống");
         }
     }
  

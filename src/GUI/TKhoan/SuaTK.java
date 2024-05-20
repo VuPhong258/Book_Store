@@ -67,8 +67,19 @@ public class SuaTK extends javax.swing.JFrame {
         String name = txt_name.getText();
         int idNhanVien = Integer.parseInt(txt_idNV.getText());
         String password = txt_password.getText();
-        String tenquyen = (String) cbb_role.getSelectedItem();
-        taiKhoanDTO = new TaiKhoanDTO(name,password,tenquyen,idNhanVien);
+        String tenquyen = (String) cbb_role.getSelectedItem(); 
+        if(txt_name.getText().isEmpty()){
+           showMessage("Vui lòng không để trống tên tài khoản");
+        }
+        else if (txt_password.getText().isEmpty()){
+           showMessage("Vui lòng không để trống password");
+        }
+        else if (txt_idNV.getText().isEmpty()){
+           showMessage("Vui lòng không để trống ID nhân viên");
+        } else {
+             taiKhoanDTO = new TaiKhoanDTO(name,password,tenquyen,idNhanVien);
+        }
+      
         return taiKhoanDTO;
     }
 
@@ -109,6 +120,8 @@ public class SuaTK extends javax.swing.JFrame {
         if (!isValidData()) {
         return;
         }
+        try {
+
 // Nhận thông tin từ giao diện
         TaiKhoanDTO tkNew = getNewTaiKhoan();
         tkNew.setIdTaiKhoan(id_taikhoan);
@@ -120,6 +133,9 @@ public class SuaTK extends javax.swing.JFrame {
         } else {
             showMessage( "Sửa tài khoản thất bại");
           
+        }
+        } catch (Exception ex) {
+            showMessage("Sửa tài khoản thất bại do có textField bị bỏ trống");
         }
         
     }

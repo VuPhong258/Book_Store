@@ -32,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
 public class HoaDon extends javax.swing.JPanel {
     private ArrayList<HoaDonDTO> listHoaDon = (new HoaDonBUS()).getAll();
     private TaiKhoanDTO nhanVien;
+    KhachHangBUS khachHangBUS;
     /**
      * Creates new form SanPham
      */

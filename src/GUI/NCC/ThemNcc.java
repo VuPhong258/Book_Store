@@ -32,6 +32,9 @@ public class ThemNcc extends javax.swing.JFrame {
     }
 
     private NhaCungCapDTO getNewNCC (){
+        String name =  txt_name.getText();
+        String address = txt_address.getText();
+        String phone = txt_phone.getText();
         if(txt_name.getText().isEmpty()){
            showMessage("Vui lòng không để trống tên nhà cung cấp");
         }
@@ -40,13 +43,10 @@ public class ThemNcc extends javax.swing.JFrame {
         }
         else if (txt_phone.getText().isEmpty()){
            showMessage("Vui lòng không để trống số điện thoại");
+        } else {
+             nhaCungCapDTO = new NhaCungCapDTO(name, address, phone);
         }
-        
-        String name =  txt_name.getText();
-        String address = txt_address.getText();
-        String phone = txt_phone.getText();
-        
-        nhaCungCapDTO = new NhaCungCapDTO(name, address, phone);
+       
         return nhaCungCapDTO;
     }
     
@@ -85,6 +85,7 @@ public class ThemNcc extends javax.swing.JFrame {
         if (!isValidData()) {
         return;
         }
+        try {
         NhaCungCapDTO nccNew = getNewNCC();
         nhaCungCapBUS = new NhaCungCapBUS();
         boolean status = nhaCungCapBUS.themNhaCungCap(nccNew);
@@ -93,6 +94,9 @@ public class ThemNcc extends javax.swing.JFrame {
             dispose();  
         } else {
             showMessage("Thêm nhà cung cấp thất bại");
+        }
+        } catch (Exception ex) {
+            showMessage("Thêm nhà cung cấp thất bại do có textField bị bỏ trống");
         }
     }
     

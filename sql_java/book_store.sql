@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 19, 2024 at 08:17 PM
+-- Generation Time: May 20, 2024 at 08:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,6 +34,27 @@ CREATE TABLE `tbl_chitiethoadon` (
   `giaban` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_chitiethoadon`
+--
+
+INSERT INTO `tbl_chitiethoadon` (`id_sach`, `soluongmua`, `id_hoadon`, `giaban`) VALUES
+(1, 1, 4, '90.000VNĐ'),
+(1, 3, 5, '270.000VNĐ'),
+(1, 1, 10, '90.000VNĐ'),
+(2, 2, 6, '260.000VNĐ'),
+(2, 3, 8, '390.000VNĐ'),
+(4, 2, 1, '190.000VNĐ'),
+(4, 1, 9, '190.000VNĐ'),
+(5, 1, 10, '149.000VNĐ'),
+(6, 2, 1, '123.000VNĐ'),
+(9, 3, 1, '321.000VNĐ'),
+(10, 1, 3, ''),
+(15, 5, 3, ''),
+(21, 2, 2, ''),
+(25, 1, 7, '69.000VNĐ'),
+(27, 1, 2, '');
+
 -- --------------------------------------------------------
 
 --
@@ -41,11 +62,21 @@ CREATE TABLE `tbl_chitiethoadon` (
 --
 
 CREATE TABLE `tbl_chitietphieunhap` (
-  `id_phieu_nhap` int(10) NOT NULL,
+  `id_phieunhap` int(10) NOT NULL,
   `id_sach` int(11) NOT NULL,
+  `tensach` varchar(100) NOT NULL,
   `soluongnhap` int(11) NOT NULL,
   `gianhap` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_chitietphieunhap`
+--
+
+INSERT INTO `tbl_chitietphieunhap` (`id_phieunhap`, `id_sach`, `tensach`, `soluongnhap`, `gianhap`) VALUES
+(1, 4, '5 đường mòn Hồ Chí Minh', 2, '380000'),
+(2, 9, 'Cậu bé Bạc', 5, '210000'),
+(3, 11, 'Đảo ngàn sao', 5, '300000');
 
 -- --------------------------------------------------------
 
@@ -57,10 +88,26 @@ CREATE TABLE `tbl_hoadon` (
   `id_hoadon` int(10) NOT NULL,
   `id_khachhang` int(11) NOT NULL,
   `id_nhanvien` int(11) NOT NULL,
-  `ngaylaphoadon` varchar(50) NOT NULL,
+  `ngaylaphoadon` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `tongtien` varchar(50) NOT NULL,
   `trangthai` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_hoadon`
+--
+
+INSERT INTO `tbl_hoadon` (`id_hoadon`, `id_khachhang`, `id_nhanvien`, `ngaylaphoadon`, `tongtien`, `trangthai`) VALUES
+(1, 2, 4234234, '2024-04-30 05:25:39', '634.000VNĐ', 1),
+(2, 11, 4234234, '2024-04-30 05:31:35', '228.000VNĐ', 1),
+(3, 2, 4234234, '2024-04-30 05:32:52', '461.000VNĐ', 1),
+(4, 16, 432123, '2024-04-30 05:35:17', '90.000VNĐ', 1),
+(5, 1, 4234234, '2024-05-17 16:24:08', '270.000VNĐ', 1),
+(6, 1, 4234234, '2024-05-17 16:27:53', '260.000VNĐ', 1),
+(7, 1, 4234234, '2024-05-17 16:41:46', '69.000VNĐ', 1),
+(8, 8, 5432452, '2024-05-18 03:14:35', '390.000VNĐ', 1),
+(9, 1, 7878677, '2024-05-18 04:20:45', '190.000VNĐ', 1),
+(10, 1, 9423431, '2024-05-20 18:09:21', '239.000VNĐ', 1);
 
 -- --------------------------------------------------------
 
@@ -138,12 +185,21 @@ INSERT INTO `tbl_ncc` (`id_ncc`, `tenncc`, `diachi`, `trangthai`, `sodienthoai`)
 
 CREATE TABLE `tbl_phieunhap` (
   `id_phieunhap` int(10) NOT NULL,
-  `id_ncc` int(11) NOT NULL,
+  `tenncc` varchar(100) NOT NULL,
   `id_nhanvien` int(11) NOT NULL,
   `ngaynhap` varchar(20) NOT NULL,
   `tongtien` varchar(50) NOT NULL,
   `trangthai` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_phieunhap`
+--
+
+INSERT INTO `tbl_phieunhap` (`id_phieunhap`, `tenncc`, `id_nhanvien`, `ngaynhap`, `tongtien`, `trangthai`) VALUES
+(1, 'Công Ty TNHH Đăng Nguyên', 343213, '2024-05-20 23:39:17', '380.000VNĐ', 1),
+(2, 'Công Ty Cổ Phần Phát Hành Sách Tp. HCM', 343213, '2024-05-21 00:15:50', '210.000VNĐ', 1),
+(3, 'Nhà Sách Trực Tuyến BOOKBUY.VN', 2312321, '2024-05-21 00:16:19', '300.000VNĐ', 1);
 
 -- --------------------------------------------------------
 
@@ -178,10 +234,10 @@ CREATE TABLE `tbl_sach` (
 --
 
 INSERT INTO `tbl_sach` (`id_sach`, `tensach`, `tentacgia`, `dongia`, `soluong`, `loaisach`, `hinhanh`, `trangthai`) VALUES
-(1, 'Tạp văn Nguyễn Ngọc Tư', 'Nguyễn Ngọc Tư', '90.000VNĐ', 2, 'Truyện ngắn- tản văn', 'tapvannguyenngoctu', 1),
-(2, 'Mùa hè không tên', 'Nguyễn Nhật Ánh', '130.000VNĐ', 3, 'Tiểu thuyết', 'muahekhongten', 1),
-(3, 'Nhật ký trong tù', 'Hồ Chí Minh', '79.000VNĐ', 1, 'Thơ', 'nhatkytrongtu', 1),
-(4, '5 đường mòn Hồ Chí Minh', 'Đặng Phong', '190.000VNĐ', 2, 'Lịch sử - Địa  lý', '5duongmonhochiminh', 1),
+(1, 'Tạp văn Nguyễn Ngọc Tư', 'Nguyễn Ngọc Tư', '90.000VNĐ', 4, 'Truyện ngắn- tản văn', 'tapvannguyenngoctu', 1),
+(2, 'Mùa hè không tên', 'Nguyễn Nhật Ánh', '130.000VNĐ', 10, 'Tiểu thuyết', 'muahekhongten', 1),
+(3, 'Nhật ký trong tù', 'Hồ Chí Minh', '79.000VNĐ', 9, 'Thơ', 'nhatkytrongtu', 0),
+(4, '5 đường mòn Hồ Chí Minh', 'Đặng Phong', '190.000VNĐ', 4, 'Lịch sử - Địa  lý', '5duongmonhochiminh', 1),
 (5, 'Ám thị tâm lý', 'Patrick King', '149.000VNĐ', 5, 'Tâm lý giáo dục', 'amthitamly', 1),
 (6, 'Bạn đắt giá bao nhiêu?', 'Vân tình', '119.000VNĐ', 4, 'Kỹ năng sống', 'bandatgiabaonhieu', 1),
 (7, 'Bông sen Vàng', 'Sơn Tùng', '160.000VNĐ', 5, 'Tiểu thuyết', 'bongsenvang', 1),
@@ -201,7 +257,7 @@ INSERT INTO `tbl_sach` (`id_sach`, `tensach`, `tentacgia`, `dongia`, `soluong`, 
 (21, 'Lũ trẻ thủy tinh', 'Kristina Ohlsson', '40.000VNĐ', 5, 'Truyện thiếu nhi', 'lutrethuytinh', 1),
 (22, 'Mặc Kệ Thiên Hạ - Sống Như Người Nhật', 'Mari Tamagawa', '79.000VNĐ', 5, 'Kỹ năng sống', 'mackethienhasongnhunguoinhat', 1),
 (23, 'Mỗi Lần Vấp Ngã Là Một Lần Trưởng Thành', 'Liêu Trí Phong', '120.000VNĐ', 5, 'Kỹ năng sống', 'moilanvapngalamotlantruongthanh', 1),
-(24, 'Mùa Hè Không Tên', 'Nguyễn Nhật Ánh', '130.000VNĐ', 5, 'Tiểu thuyết', 'muahekhongten', 1),
+(24, 'Mùa Hè Không Tên', 'Nguyễn Nhật Ánh', '130.000VNĐ', 5, 'Tiểu thuyết', 'muahekhongten', 0),
 (25, 'Nhà Giả Kim', 'Paulo Coelho', '69.000VNĐ', 5, 'Tiểu thuyết', 'nhagiakim', 1),
 (26, 'Nhật Ký Trong Tù', 'Hồ Chí Minh', '80.000VNĐ', 5, 'Thơ', 'nhatkytrongtu', 1),
 (27, 'Người Bán Hàng Vĩ Đại Nhất Thế Giới', 'Og Mandino', '148.000VNĐ', 5, 'Marketing - Bán hàng', 'nguoibanhangvidainhatthegioi', 1),
@@ -272,7 +328,7 @@ CREATE TABLE `tbl_taikhoan` (
   `id_tai_khoan` int(11) NOT NULL,
   `tendangnhap` varchar(255) NOT NULL,
   `matkhau` varchar(255) NOT NULL,
-  `loaitaikhoan` varchar(255) NOT NULL,
+  `loaitaikhoan` varchar(255) NOT NULL DEFAULT '0',
   `id_nhanvien` int(11) NOT NULL,
   `tenquyen` varchar(50) NOT NULL,
   `trangthai` int(11) NOT NULL DEFAULT 1
@@ -283,7 +339,10 @@ CREATE TABLE `tbl_taikhoan` (
 --
 
 INSERT INTO `tbl_taikhoan` (`id_tai_khoan`, `tendangnhap`, `matkhau`, `loaitaikhoan`, `id_nhanvien`, `tenquyen`, `trangthai`) VALUES
-(1, 'phong', '12345678', '1', 343213, 'Admin', 1);
+(1, 'phong', '12345678', '1', 343213, 'Admin', 1),
+(2, 'an', 'an123456', '0', 2312321, 'Quản lý nhập', 1),
+(3, 'quang', 'quang12345', '0', 123123, 'Nhân viên bán hàng', 1),
+(4, 'khoa', 'khoa12345', '0', 124121, 'Không có', 1);
 
 --
 -- Indexes for dumped tables
@@ -293,14 +352,14 @@ INSERT INTO `tbl_taikhoan` (`id_tai_khoan`, `tendangnhap`, `matkhau`, `loaitaikh
 -- Indexes for table `tbl_chitiethoadon`
 --
 ALTER TABLE `tbl_chitiethoadon`
-  ADD PRIMARY KEY (`id_hoadon`),
-  ADD KEY `id_sach` (`id_sach`);
+  ADD PRIMARY KEY (`id_sach`,`id_hoadon`),
+  ADD KEY `tbl_chitiethoadon_ibfk_5` (`id_hoadon`);
 
 --
 -- Indexes for table `tbl_chitietphieunhap`
 --
 ALTER TABLE `tbl_chitietphieunhap`
-  ADD PRIMARY KEY (`id_phieu_nhap`),
+  ADD PRIMARY KEY (`id_phieunhap`),
   ADD KEY `id_sach` (`id_sach`);
 
 --
@@ -327,7 +386,7 @@ ALTER TABLE `tbl_ncc`
 --
 ALTER TABLE `tbl_phieunhap`
   ADD PRIMARY KEY (`id_phieunhap`),
-  ADD KEY `id_ncc` (`id_ncc`);
+  ADD KEY `id_ncc` (`tenncc`);
 
 --
 -- Indexes for table `tbl_sach`
@@ -342,26 +401,26 @@ ALTER TABLE `tbl_tacgia`
   ADD PRIMARY KEY (`tentacgia`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indexes for table `tbl_taikhoan`
 --
+ALTER TABLE `tbl_taikhoan`
+  ADD PRIMARY KEY (`id_tai_khoan`);
 
 --
--- AUTO_INCREMENT for table `tbl_chitiethoadon`
+-- AUTO_INCREMENT for dumped tables
 --
-ALTER TABLE `tbl_chitiethoadon`
-  MODIFY `id_hoadon` int(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_chitietphieunhap`
 --
 ALTER TABLE `tbl_chitietphieunhap`
-  MODIFY `id_phieu_nhap` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_phieunhap` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_hoadon`
 --
 ALTER TABLE `tbl_hoadon`
-  MODIFY `id_hoadon` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_hoadon` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_khachhang`
@@ -379,13 +438,33 @@ ALTER TABLE `tbl_ncc`
 -- AUTO_INCREMENT for table `tbl_phieunhap`
 --
 ALTER TABLE `tbl_phieunhap`
-  MODIFY `id_phieunhap` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_phieunhap` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_sach`
 --
 ALTER TABLE `tbl_sach`
   MODIFY `id_sach` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `tbl_taikhoan`
+--
+ALTER TABLE `tbl_taikhoan`
+  MODIFY `id_tai_khoan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_chitiethoadon`
+--
+ALTER TABLE `tbl_chitiethoadon`
+  ADD CONSTRAINT `tbl_chitiethoadon_ibfk_1` FOREIGN KEY (`id_sach`) REFERENCES `tbl_sach` (`id_sach`),
+  ADD CONSTRAINT `tbl_chitiethoadon_ibfk_2` FOREIGN KEY (`id_sach`) REFERENCES `tbl_sach` (`id_sach`),
+  ADD CONSTRAINT `tbl_chitiethoadon_ibfk_3` FOREIGN KEY (`id_hoadon`) REFERENCES `tbl_hoadon` (`id_hoadon`),
+  ADD CONSTRAINT `tbl_chitiethoadon_ibfk_4` FOREIGN KEY (`id_sach`) REFERENCES `tbl_sach` (`id_sach`),
+  ADD CONSTRAINT `tbl_chitiethoadon_ibfk_5` FOREIGN KEY (`id_hoadon`) REFERENCES `tbl_hoadon` (`id_hoadon`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

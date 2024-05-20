@@ -64,15 +64,6 @@ public class SuaNcc extends javax.swing.JFrame {
         String name = txt_name.getText();
         String address = txt_address.getText();
         String phone = txt_phone.getText();
-        nhaCungCapDTO = new NhaCungCapDTO(name,address,phone);
-        return nhaCungCapDTO;
-    }
-
-    private boolean isValidData() {
-//        String name = txt_name.getText();
-//        String address = txt_address.getText();
-        String phone = txt_phone.getText();
-
         if(txt_name.getText().isEmpty()){
            showMessage("Vui lòng không để trống tên nhà cung cấp");
         }
@@ -81,7 +72,19 @@ public class SuaNcc extends javax.swing.JFrame {
         }
         else if (txt_phone.getText().isEmpty()){
            showMessage("Vui lòng không để trống số điện thoại");
-        }
+        } else {
+                nhaCungCapDTO = new NhaCungCapDTO(name,address,phone);
+                }
+        
+        return nhaCungCapDTO;
+    }
+
+    private boolean isValidData() {
+//        String name = txt_name.getText();
+//        String address = txt_address.getText();
+        String phone = txt_phone.getText();
+
+        
          // Kiểm tra định dạng số điện thoại
         if (phone.length() > 11 || !phone.startsWith("0")) {
             showMessage("Số điện thoại không hợp lệ");
@@ -94,6 +97,8 @@ public class SuaNcc extends javax.swing.JFrame {
         if (!isValidData()) {
         return;
         }
+        try {
+
 // Nhận thông tin từ giao diện
         NhaCungCapDTO nccNew = getNewNCC();
         nccNew.setIdNcc(id_ncc);
@@ -105,6 +110,9 @@ public class SuaNcc extends javax.swing.JFrame {
         } else {
             showMessage( "Sửa nhà cung cấp thất bại");
           
+        } 
+        } catch (Exception ex) {
+            showMessage("Sửa nhà cung cấp thất bại do có textField bị bỏ trống");
         }
     }
  

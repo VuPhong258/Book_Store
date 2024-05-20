@@ -33,6 +33,11 @@ public class ThemKH extends javax.swing.JFrame {
     }
 
     private KhachHangDTO getNewKH (){
+          String name =  txt_name.getText();
+        String year = txt_year.getText();
+        String phone = txt_phone.getText();
+        String address = txt_address.getText();
+        String email = txt_email.getText();
         if(txt_name.getText().isEmpty()){
            showMessage("Vui lòng không để trống họ tên khách hàng");
         }
@@ -44,15 +49,10 @@ public class ThemKH extends javax.swing.JFrame {
            showMessage("Vui lòng không để trống địa chỉ");
          } else if (txt_email.getText().isEmpty()){
            showMessage("Vui lòng không để trống email");
+         } else {
+               khachHangDTO = new KhachHangDTO(name,year,address, phone, email);
          }
-       
-        String name =  txt_name.getText();
-        String year = txt_year.getText();
-        String phone = txt_phone.getText();
-        String address = txt_address.getText();
-        String email = txt_email.getText();
-        
-        khachHangDTO = new KhachHangDTO(name,year,address, phone, email);
+
         return khachHangDTO;
     }
     
@@ -103,7 +103,9 @@ public class ThemKH extends javax.swing.JFrame {
         KhachHangDTO khNew = getNewKH();
         if (!isValidData()) {
         return;
-        }
+        } 
+        try {
+
         khachHangBUS = new KhachHangBUS();
         boolean status = khachHangBUS.addKhachHang(khNew);
         if (status) {
@@ -111,6 +113,9 @@ public class ThemKH extends javax.swing.JFrame {
             dispose();  
         } else {
             showMessage("Thêm khách hàng thất bại");
+        } 
+        } catch (Exception ex) {
+            showMessage("Thêm khách hàng thất bại do có textField bị bỏ trống");
         }
     }
 

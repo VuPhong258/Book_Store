@@ -85,7 +85,7 @@ public class SanPhamDAO {
         boolean status = false;
         try {
             connect = MySQLConnection.getConnection();
-            String sql = "UPDATE `tbl_sach` SET tensanpham = ? , tentacgia = ?, dongia = ?, soluong = ?, loaisach = ?, hinhanh = ? WHERE id_sach = ?";
+            String sql = "UPDATE `tbl_sach` SET tensach = ? , tentacgia = ?, dongia = ?, soluong = ?, loaisach = ?, hinhanh = ? WHERE id_sach = ?";
             pst = connect.prepareStatement(sql);
             pst.setString(1, sanPhamDTO.getTenSanPham());
             pst.setString(2, sanPhamDTO.getTenTacGia());
