@@ -11,6 +11,7 @@ import GUI.SPham.ChiTietSP;
 import GUI.SPham.SuaSP;
 import GUI.SPham.ThemSP;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -22,15 +23,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Acer
  */
 public class SanPham extends javax.swing.JPanel {
-        
-        public final SanPhamBUS spBUS = new SanPhamBUS();
-        private ArrayList<SanPhamDTO> listSanPham = spBUS.getAll();
-        DefaultTableModel tblModel;
-        SanPhamBUS sanPhamBUS;
-        SanPhamDAO sanPhamDAO;
-        ThemSP themSP;
-        SuaSP suaSP;
-        ChiTietSP chiTietSP;
+
+    public final SanPhamBUS spBUS = new SanPhamBUS();
+    private ArrayList<SanPhamDTO> listSanPham = spBUS.getAll();
+    DefaultTableModel tblModel;
+    SanPhamBUS sanPhamBUS;
+    SanPhamDAO sanPhamDAO;
+    ThemSP themSP;
+    SuaSP suaSP;
+    ChiTietSP chiTietSP;
 
     /**
      * Creates new form SanPham
@@ -42,7 +43,7 @@ public class SanPham extends javax.swing.JPanel {
         btn_xoa.setIcon(new FlatSVGIcon("./GUI/icon/delete.svg"));
         btn_chitiet.setIcon(new FlatSVGIcon("./GUI/icon/detail.svg"));
         btn_lammoi.setIcon(new FlatSVGIcon("./GUI/icon/toolBar_refresh.svg"));
-        tbl_sanpham.setFocusable(false);     
+        tbl_sanpham.setFocusable(false);
         tbl_sanpham.setDefaultEditor(Object.class, null); // set ko cho sửa dữ liệu trên table
         tbl_sanpham.getColumnModel().getColumn(1).setPreferredWidth(180);
         tbl_sanpham.setFocusable(false);
@@ -58,7 +59,7 @@ public class SanPham extends javax.swing.JPanel {
         for (SanPhamDTO sanPham : listSanPham) {
             Object[] row = {
                 sanPham.getIdSanPham(),
-               sanPham.getTenSanPham(),
+                sanPham.getTenSanPham(),
                 sanPham.getTenTacGia(),
                 sanPham.getDonGia(),
                 sanPham.getLoaiSach()
@@ -75,44 +76,69 @@ public class SanPham extends javax.swing.JPanel {
             tbl_sanpham.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
     }
-    
+
     private SanPhamDTO selectSanPham() {
-            int selectedRow = tbl_sanpham.getSelectedRow();
-            SanPhamDTO result = null;
-            if (selectedRow != -1) {
+        int selectedRow = tbl_sanpham.getSelectedRow();
+        SanPhamDTO result = null;
+        if (selectedRow != -1) {
             int id_sanpham = (int) tbl_sanpham.getValueAt(selectedRow, 0);
             sanPhamBUS = new SanPhamBUS();
             result = sanPhamBUS.selectByID(id_sanpham);
         }
         return result;
     }
-    
+
     private void xoaSanPham() {
         int selectedRow = tbl_sanpham.getSelectedRow();
         if (selectedRow != -1) {
             int id_sanpham = (int) tbl_sanpham.getValueAt(selectedRow, 0);
             SanPhamDTO canXoa = sanPhamBUS.selectByID(id_sanpham);
             sanPhamBUS = new SanPhamBUS();
-            boolean thanhCong = sanPhamBUS.xoaSanPham(id_sanpham);
-            JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sản phẩm này");
-            if (thanhCong) {
-
-                JOptionPane.showMessageDialog(null, "Xóa sản phẩm thành công");
-                listSanPham = sanPhamBUS.getAll();
-                hienThiListSanPham(listSanPham);
-            } else {
-                JOptionPane.showMessageDialog(null, "Xóa sản phẩm lỗi");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm để xóa");
+            int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn sản phẩm này");
+            if (result == JOptionPane.YES_OPTION) {
+                boolean thanhCong = sanPhamBUS.xoaSanPham(id_sanpham);
+                if (thanhCong) {
+                    JOptionPane.showMessageDialog(null, "Xóa sản phẩm thành công");
+                    listSanPham = sanPhamBUS.getAll();
+                    hienThiListSanPham(listSanPham);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Xóa sản phẩm lỗi");
+                }
+            } 
+            else if (result == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "Không xóa sản phẩm nữa");
         }
+        }            else {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm để xóa");
+            }
+        }
+    
+     private void timKiemSanPham(String keyword) {
+        ArrayList<SanPhamDTO> ketQuaTimKiem = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) tbl_sanpham.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String tensanpham = (String) model.getValueAt(i, 1);
+            int id_sanpham = (int) model.getValueAt(i, 0);
+            String tentacgia = (String) model.getValueAt(i, 2);
+            String giaban = (String) model.getValueAt(i, 3);
+            String theloai = (String) model.getValueAt(i, 4);
+            if (tensanpham.toLowerCase().contains(keyword.toLowerCase())
+                    || String.valueOf(id_sanpham).contains(keyword) ||tentacgia.toLowerCase().contains(keyword.toLowerCase()) || giaban.toLowerCase().contains(keyword.toLowerCase()) || theloai.toLowerCase().contains(keyword.toLowerCase()) ) {
+                ketQuaTimKiem.add(sanPhamBUS.selectByID(id_sanpham));
+            }
+           
+            }
+            if (ketQuaTimKiem.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Không tìm thấy khách hàng ! ");
+            }
+            hienThiListSanPham(ketQuaTimKiem);
     }
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
+        /**
+         * This method is called from within the constructor to initialize the
+         * form. WARNING: Do NOT modify this code. The content of this method is
+         * always regenerated by the Form Editor.
+         */
+        @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -177,6 +203,11 @@ public class SanPham extends javax.swing.JPanel {
         panel_control.add(jLabel1);
 
         txt_timkiem.setPreferredSize(new java.awt.Dimension(100, 30));
+        txt_timkiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_timkiemKeyPressed(evt);
+            }
+        });
         panel_control.add(txt_timkiem);
 
         btn_lammoi.setBackground(new java.awt.Color(255, 255, 255));
@@ -236,7 +267,7 @@ public class SanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
-       xoaSanPham();
+        xoaSanPham();
     }//GEN-LAST:event_btn_xoaActionPerformed
 
     private void btn_lammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lammoiActionPerformed
@@ -245,24 +276,29 @@ public class SanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_lammoiActionPerformed
 
     private void btn_chitietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chitietActionPerformed
-        if (selectSanPham() !=null){
+        if (selectSanPham() != null) {
             chiTietSP = new ChiTietSP(selectSanPham());
             chiTietSP.setVisible(true);
-       }
-       else {
-           JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm");
-       }
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm");
+        }
     }//GEN-LAST:event_btn_chitietActionPerformed
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
-        if (selectSanPham() !=null){
+        if (selectSanPham() != null) {
             suaSP = new SuaSP(selectSanPham());
             suaSP.setVisible(true);
-       }
-       else {
-           JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm");
-       }
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm");
+        }
     }//GEN-LAST:event_btn_suaActionPerformed
+
+    private void txt_timkiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_timkiemKeyPressed
+       if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String keyword = txt_timkiem.getText().trim();
+            timKiemSanPham(keyword);
+        }
+    }//GEN-LAST:event_txt_timkiemKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

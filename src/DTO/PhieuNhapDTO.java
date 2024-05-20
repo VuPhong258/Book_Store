@@ -10,7 +10,7 @@ public class PhieuNhapDTO {
 
     private int id_phieunhap;
     private String ngaynhap;
-    private int id_ncc;
+    private String tenncc;
     private int id_nhanvien; 
     private String tongtien;
     private int trangthai;
@@ -18,18 +18,18 @@ public class PhieuNhapDTO {
     public PhieuNhapDTO() {
     }
 
-    public PhieuNhapDTO(int id_phieunhap, String ngaynhap, int id_ncc, int id_nhanvien, String tongtien, int trangthai) {
+    public PhieuNhapDTO(int id_phieunhap, String ngaynhap, String tenncc, int id_nhanvien, String tongtien, int trangthai) {
         this.id_phieunhap = id_phieunhap;
         this.ngaynhap = ngaynhap;
-        this.id_ncc = id_ncc;
+        this.tenncc = tenncc;
         this.id_nhanvien = id_nhanvien;
         this.tongtien = tongtien;
         this.trangthai = trangthai;
     }
     
-    public PhieuNhapDTO(String ngaynhap, int id_ncc, int id_nhanvien, String tongtien, int trangthai) {    
+    public PhieuNhapDTO(String ngaynhap, String tenncc, int id_nhanvien, String tongtien, int trangthai) {    
         this.ngaynhap = ngaynhap;
-        this.id_ncc = id_ncc;
+        this.tenncc = tenncc;
         this.id_nhanvien = id_nhanvien;
         this.tongtien = tongtien;
         this.trangthai = trangthai;
@@ -43,8 +43,8 @@ public class PhieuNhapDTO {
         return ngaynhap;
     }
 
-    public int getIdNhaCungCap() {
-        return id_ncc;
+    public String getTenNhaCungCap() {
+        return tenncc;
     }
 
     public int getIdNV() {
@@ -67,8 +67,8 @@ public class PhieuNhapDTO {
         this.ngaynhap = ngaynhap;
     }
 
-    public void setIdNhaCungCap(int id_ncc) {
-        this.id_ncc = id_ncc;
+    public void setTenNhaCungCap(String tenncc) {
+        this.tenncc = tenncc;
     }
 
     public void setIdNV(int id_nhanvien) {

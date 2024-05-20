@@ -37,16 +37,6 @@ public class PhieuNhap extends javax.swing.JPanel {
     /**
      * Creates new form SanPham
      */
-        public PhieuNhap(){
-         initComponents();
-        this.nhanVien = nhanVien;
-        btn_them.setIcon(new FlatSVGIcon("./GUI/icon/add.svg"));
-        btn_xoa.setIcon(new FlatSVGIcon("./GUI/icon/delete.svg"));
-        btn_xoa.setVisible(false);
-        btn_chitiet.setIcon(new FlatSVGIcon("./GUI/icon/detail.svg"));
-        btn_lammoi.setIcon(new FlatSVGIcon("./GUI/icon/toolBar_refresh.svg"));
-        hienThiListPhieuNhap(listPhieuNhap);
-    }
     public PhieuNhap(TaiKhoanDTO nhanVien) {
         initComponents();
         this.nhanVien = nhanVien;
@@ -75,11 +65,11 @@ public class PhieuNhap extends javax.swing.JPanel {
                 for (PhieuNhapDTO phieuNhapDTO : listPhieuNhap){
                     Object [] row = {
                         phieuNhapDTO.getIdPhieuNhap(),
-                        phieuNhapDTO.getIdNhaCungCap(),
+                        phieuNhapDTO.getTenNhaCungCap(),
                         phieuNhapDTO.getIdNV(),
                         phieuNhapDTO.getNgayNhap(),
                         phieuNhapDTO.getTongTien(),
-                        phieuNhapDTO.getTrangthai()                       
+                   
                     };
                     model.addRow(row);
                 }
@@ -113,17 +103,17 @@ public class PhieuNhap extends javax.swing.JPanel {
         ArrayList<PhieuNhapDTO> ketQuaTimKiem = new ArrayList<>();
         DefaultTableModel model = (DefaultTableModel) tbl_phieunhap.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
-            int id_ncc = (int) model.getValueAt(i, 1);
+            String tenncc =  (String)model.getValueAt(i, 1);
             int id_phieunhap = (int) model.getValueAt(i, 0);
             int id_nhanvien = (int) model.getValueAt(i, 2);
             if (String.valueOf(id_phieunhap).contains(keyword) 
-                    || String.valueOf(id_nhanvien).contains(keyword) ||String.valueOf(id_ncc).contains(keyword) ) {
+                    || String.valueOf(id_nhanvien).contains(keyword) ||String.valueOf(tenncc).contains(keyword) ) {
                 ketQuaTimKiem.add(phieuNhapBUS.selectByID(id_phieunhap));
             }
            
             }
             if (ketQuaTimKiem.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Không tìm thấy khách hàng ! ");
+                    JOptionPane.showMessageDialog(null, "Không tìm thấy kết quả ! ");
             }
             hienThiListPhieuNhap(ketQuaTimKiem);
     }
@@ -205,21 +195,28 @@ public class PhieuNhap extends javax.swing.JPanel {
 
         tbl_phieunhap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã PN", "Mã NCC", "Mã Nhân Viên", "Ngày nhập", "Tổng tiền", "Trạng thái"
+                "Mã PN", "Tên NCC", "Mã Nhân Viên", "Ngày nhập", "Tổng tiền"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tbl_phieunhap.setPreferredSize(new java.awt.Dimension(1200, 800));

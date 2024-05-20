@@ -26,7 +26,7 @@ public class Main extends javax.swing.JFrame {
     NhaCungCap nhaCungCap;
     PhieuNhap phieuNhap;
     TaiKhoan taiKhoan;
-//    HoaDon hoaDon;
+    HoaDon hoaDon;
     KhachHang khachHang;
     TaiKhoanDTO tkDTO;
     /**
@@ -55,10 +55,40 @@ public class Main extends javax.swing.JFrame {
            btn_khachhang.setIcon(new FlatSVGIcon("./GUI/icon/customer.svg"));
            btn_thongke.setIcon(new FlatSVGIcon("./GUI/icon/thongke.svg"));
            btn_dangxuat.setIcon(new FlatSVGIcon("./GUI/icon/dangxuat.svg"));
-           
-           
-
+          
+            kiemTraQuyen();     
         
+    }
+     private void kiemTraQuyen() {               //1 = admin = có tất cả quyền
+        if ("Quản lý nhập".equals(this.tkDTO.getTenQuyen())) {        //nếu là QL nhập
+            btn_hoadon.setEnabled(false);
+            btn_taikhoan.setEnabled(false);
+            btn_khachhang.setEnabled(false);
+            btn_thongke.setEnabled(false);
+            lbl_tenNV.setText(this.tkDTO.getTenDangNhap());
+            lbl_chucvu.setText(this.tkDTO.getTenQuyen());
+        }
+        else if ("Nhân viên bán hàng".equals(this.tkDTO.getTenQuyen())) {   //nếu là NV bán hàng
+            btn_taikhoan.setEnabled(false);
+            btn_nhacungcap.setEnabled(false);
+            btn_phieunhap.setEnabled(false);
+            lbl_tenNV.setText(this.tkDTO.getTenDangNhap());
+            lbl_chucvu.setText(this.tkDTO.getTenQuyen());
+        } else if ("Admin".equals(this.tkDTO.getTenQuyen())){
+            lbl_tenNV.setText(this.tkDTO.getTenDangNhap());
+            lbl_chucvu.setText(this.tkDTO.getTenQuyen());
+        } else {
+            lbl_tenNV.setText(this.tkDTO.getTenDangNhap());
+            lbl_chucvu.setText("Khách hàng");
+            btn_hoadon.setEnabled(false);
+            btn_taikhoan.setEnabled(false);
+            btn_khachhang.setEnabled(false);
+            btn_thongke.setEnabled(false);
+            btn_nhacungcap.setEnabled(false);
+            btn_phieunhap.setEnabled(false);
+            btn_product.setEnabled(false);
+            btn_tacgia.setEnabled(false);
+        }
     }
     
     
@@ -373,8 +403,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_phieunhapActionPerformed
 
     private void btn_hoadonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hoadonActionPerformed
-//         hoaDon = new HoaDon();
-//       addTaskBar(mainContent, hoaDon);
+         hoaDon = new HoaDon(this.tkDTO);
+       addTaskBar(mainContent, hoaDon);
     }//GEN-LAST:event_btn_hoadonActionPerformed
 
     private void btn_nhacungcapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nhacungcapActionPerformed

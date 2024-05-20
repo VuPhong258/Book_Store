@@ -84,6 +84,7 @@ public class ThemTK extends javax.swing.JFrame {
     private boolean isValidData() {
         String username =  txt_name.getText();
         String password = txt_password.getText();
+        String id_nhanvien = String.valueOf(txt_idnv.getText());
 
         // Kiểm tra tên đăng nhập không chưa ký tự đặc biệt
         if (containsSpecialCharacter(username)){
@@ -93,6 +94,11 @@ public class ThemTK extends javax.swing.JFrame {
         // Kiểm tra độ dài của mật khẩu
         if (password.length() <8){
             showMessage("Mật khẩu phải dài hơn 8 ký tự");
+            return false;
+        }
+          // Kiểm tra độ dài của id nhân viên
+        if (id_nhanvien.length() !=6){
+            showMessage("ID nhân viên phải có 6 mã số");
             return false;
         }
         // Kiểm tra tên đã tồn tại chưa
@@ -211,7 +217,7 @@ public class ThemTK extends javax.swing.JFrame {
 
         lbl_phone1.setText("Id nhân viên");
 
-        cbb_role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không có", "Admin", "Quản lý kho", "Quản lý nhập", "Nhân viên bán hàng" }));
+        cbb_role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Không có", "Admin", "Quản lý nhập", "Nhân viên bán hàng" }));
 
         javax.swing.GroupLayout pnl_centerLayout = new javax.swing.GroupLayout(pnl_center);
         pnl_center.setLayout(pnl_centerLayout);

@@ -86,18 +86,22 @@ public class TaiKhoan extends javax.swing.JPanel {
             String tendangnhap = (String) tbl_taikhoan.getValueAt(selectedRow, 1);
             TaiKhoanDTO canXoa = taiKhoanBUS.selectByUserName(tendangnhap);
             taiKhoanBUS = new TaiKhoanBUS();
-            boolean thanhcong = taiKhoanBUS.xoaTaiKhoan(tendangnhap);
-            JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa tài khoản này");
-            if (thanhcong) {
+            int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa tài khoản này");
+            if (result == JOptionPane.YES_OPTION ){
+                 boolean thanhcong = taiKhoanBUS.xoaTaiKhoan(tendangnhap);
+                if (thanhcong) {
                 JOptionPane.showMessageDialog(null, "Xóa tài khoản thành công");
                 listTaiKhoan = taiKhoanBUS.getAll();
                 hienThiListTaiKhoan(listTaiKhoan);
             } else {
                 JOptionPane.showMessageDialog(null, "Xóa tài khoản lỗi");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn tài khoản để xóa");
+            } 
+            }else if (result == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "Không xóa tài khoản nữa");
         }
+       }           else{
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn tài khoản để xóa");
+    }
     }
 
     private void timKiemTaiKhoan(String keyword) {
@@ -178,6 +182,7 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         btn_chitiet.setBackground(new java.awt.Color(255, 255, 255));
         btn_chitiet.setText("Chi tiết");
+        btn_chitiet.setEnabled(false);
         btn_chitiet.setFocusable(false);
         panel_control.add(btn_chitiet);
 

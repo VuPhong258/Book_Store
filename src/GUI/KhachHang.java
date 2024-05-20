@@ -89,17 +89,22 @@ public class KhachHang extends javax.swing.JPanel {
             int id_tacgia = (int) tbl_khachhang.getValueAt(selectedRow, 0);
             KhachHangDTO canXoa = khachHangBUS.selectByID(id_tacgia);
             khachHangBUS = new KhachHangBUS();
-            boolean thanhCong = khachHangBUS.xoaKhachHang(id_tacgia);
-            JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa khách hàng này");
+            
+            int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa khách hàng này");
+            if (result == JOptionPane.YES_OPTION){
+                boolean thanhCong = khachHangBUS.xoaKhachHang(id_tacgia);
             if (thanhCong) {
-
                 JOptionPane.showMessageDialog(null, "Xóa khách hàng thành công");
                 listKhachHang = khachHangBUS.getAll();
                 hienThiListKhachHang(listKhachHang);
             } else {
                 JOptionPane.showMessageDialog(null, "Xóa khách hàng bị lỗi");
             }
-        } else {
+        } else if (result == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "Không xóa khách hàng nữa");
+        }
+        }
+            else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng để xóa");
         }
     }

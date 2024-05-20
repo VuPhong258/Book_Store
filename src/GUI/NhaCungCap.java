@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class NhaCungCap extends javax.swing.JPanel {
     
      public final NhaCungCapBUS nccBUS = new NhaCungCapBUS();
-     public ArrayList<NhaCungCapDTO> nhaCungCapList = nccBUS.getAll();
+     public ArrayList<NhaCungCapDTO> nhaCungCapList = nccBUS.getAllNCC();
      DefaultTableModel tblModel;
      NhaCungCapDAO nhaCungCapDAO;
      NhaCungCapBUS nhaCungCapBUS;
@@ -89,19 +89,23 @@ public class NhaCungCap extends javax.swing.JPanel {
             int mancc = (int) tbl_ncc.getValueAt(selectedRow, 0);
             NhaCungCapDTO canXoa = nhaCungCapBUS.selectByID(mancc);
             nhaCungCapBUS = new NhaCungCapBUS();
-            boolean thanhCong = nhaCungCapBUS.xoaNhaCungCap(mancc);
-            JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn nhà cung cấp này");
+            int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa nhà cung cấp này");
+            
+            if (result == JOptionPane.YES_OPTION) {
+                boolean thanhCong = nhaCungCapBUS.xoaNhaCungCap(mancc);
             if (thanhCong) {
-
                 JOptionPane.showMessageDialog(null, "Xóa nhà cung cấp thành công");
-                nhaCungCapList = nhaCungCapBUS.getAll();
+                nhaCungCapList = nhaCungCapBUS.getAllNCC();
                 hienThiListNhaCungCap(nhaCungCapList);
             } else {
-                JOptionPane.showMessageDialog(null, "Xóa nhà cung cấp lỗi");
+                JOptionPane.showMessageDialog(null, "Lỗi khi xóanhà cung cấp");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp để xóa");
+        } else if (result == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "Không xóa nhà cung cấp nữa");
         }
+    } else {
+        JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp để xóa");
+    }
     }
        
         private void timKiemNhaCungCap(String keyword) {
@@ -183,6 +187,7 @@ public class NhaCungCap extends javax.swing.JPanel {
 
         btn_chitiet.setBackground(new java.awt.Color(255, 255, 255));
         btn_chitiet.setText("Chi tiết");
+        btn_chitiet.setEnabled(false);
         btn_chitiet.setFocusable(false);
         panel_control.add(btn_chitiet);
 
@@ -257,7 +262,7 @@ public class NhaCungCap extends javax.swing.JPanel {
     }//GEN-LAST:event_btn_suaActionPerformed
 
     private void btn_lammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lammoiActionPerformed
-        nhaCungCapList = nhaCungCapBUS.getAll();
+        nhaCungCapList = nhaCungCapBUS.getAllNCC();
         hienThiListNhaCungCap(nhaCungCapList);
     }//GEN-LAST:event_btn_lammoiActionPerformed
 

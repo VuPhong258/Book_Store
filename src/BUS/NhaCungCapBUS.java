@@ -19,8 +19,9 @@ public class NhaCungCapBUS {
         public NhaCungCapBUS() {
             nhaCungCapList = nccDAO.getAll();
     }
-        public ArrayList<NhaCungCapDTO> getAll() {
-        return this.nhaCungCapList;
+       public ArrayList<NhaCungCapDTO> getAllNCC() {
+        NhaCungCapDAO nccDAO = new NhaCungCapDAO();
+        return nccDAO.getAll();
     }
         
         public boolean themNhaCungCap(NhaCungCapDTO nhaCungCapDTO){

@@ -43,8 +43,8 @@ public class Login extends javax.swing.JFrame {
             return;
         }
         
-        taiKhoanBUS = new TaiKhoanBUS();
-        TaiKhoanDTO taiKhoan = TaiKhoanDAO.getInstance().selectByUserName(tendangnhap);
+        TaiKhoanBUS tkBUS = new TaiKhoanBUS();
+        TaiKhoanDTO taiKhoan = tkBUS.selectByUserName(tendangnhap);
          if(txt_username.getText().equals("")) {
             showMessage("Tên đăng nhập không được để trống! ");
             return;

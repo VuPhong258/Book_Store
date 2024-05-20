@@ -89,19 +89,23 @@ public class TacGia extends javax.swing.JPanel {
             String tentacgia = (String) tbl_tacgia.getValueAt(selectedRow, 0);
             TacGiaDTO canXoa = tacGiaBUS.selectByName(tentacgia);
             tacGiaBUS = new TacGiaBUS();
-            boolean thanhCong =tacGiaBUS.xoaTacGia(tentacgia);
-            JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa tác giả này");
+            int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa tác giả này");
+            
+            if (result == JOptionPane.YES_OPTION) {
+                boolean thanhCong = tacGiaBUS.xoaTacGia(tentacgia);
             if (thanhCong) {
-
                 JOptionPane.showMessageDialog(null, "Xóa tác giả thành công");
                 listTacGia = tacGiaBUS.getAll();
                 hienThiListTacGia(listTacGia);
             } else {
-                JOptionPane.showMessageDialog(null, "Xóa nhà cung cấp lỗi");
+                JOptionPane.showMessageDialog(null, "Lỗi khi xóa tác giả");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp để xóa");
+        } else if (result == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "Không xóa tác giả nữa");
         }
+    } else {
+        JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp để xóa");
+    }
     }
         
          private void timKiemTacGia(String keyword) {
@@ -180,6 +184,7 @@ public class TacGia extends javax.swing.JPanel {
 
         btn_chitiet.setBackground(new java.awt.Color(255, 255, 255));
         btn_chitiet.setText("Chi tiết");
+        btn_chitiet.setEnabled(false);
         btn_chitiet.setFocusable(false);
         panel_control.add(btn_chitiet);
 

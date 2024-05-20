@@ -65,11 +65,11 @@ public class TaiKhoanDAO {
                         pst.setInt(4 ,taiKhoanDTO.getIdNhanVien());
                         int allRow  = pst.executeUpdate();
                         if (allRow > 0 ){
-                       status = true;
+                                status = true;
                         }    
                         MySQLConnection.closeConnection(connect);
                    } catch (SQLException ex) { 
-                       JOptionPane.showMessageDialog(null, "Lỗi thêm tài khoản!");
+                       JOptionPane.showMessageDialog(null,ex);
                        status = false;
                 } 
                    return status;

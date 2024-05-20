@@ -39,7 +39,7 @@ public class PhieuNhapDAO {
             PhieuNhapDTO phieuNhapDTO = new PhieuNhapDTO();
             phieuNhapDTO.setIdPhieuNhap(rs.getInt("id_phieunhap"));
             phieuNhapDTO.setNgayNhap(rs.getString("ngaynhap"));
-            phieuNhapDTO.setIdNhaCungCap(rs.getInt("id_ncc"));
+            phieuNhapDTO.setTenNhaCungCap(rs.getString("tenncc"));
             phieuNhapDTO.setIdNV(rs.getInt("id_nhanvien"));
             phieuNhapDTO.setTongTien(rs.getString("tongtien"));
             phieuNhapDTO.setTrangthai(rs.getInt("trangthai"));
@@ -54,11 +54,11 @@ public class PhieuNhapDAO {
       
     public boolean addPhieuNhap(PhieuNhapDTO phieuNhapDTO){
     boolean status = false;
-    String sql  = "INSERT INTO `tbl_phieunhap`(id_ncc, id_nhanvien, ngaynhap, trangthai, tongtien) VALUES (?, ?, ?, ?, ?)";
+    String sql  = "INSERT INTO `tbl_phieunhap`(tenncc, id_nhanvien, ngaynhap, trangthai, tongtien) VALUES (?, ?, ?, ?, ?)";
     try {
         connect = MySQLConnection.getConnection();
         pst = connect.prepareStatement(sql);
-        pst.setInt(1, phieuNhapDTO.getIdNhaCungCap());
+        pst.setString(1, phieuNhapDTO.getTenNhaCungCap());
         pst.setInt(2, phieuNhapDTO.getIdNV());
         pst.setString(3, phieuNhapDTO.getNgayNhap());
         pst.setInt(4, phieuNhapDTO.getTrangthai());
@@ -98,11 +98,11 @@ public class PhieuNhapDAO {
         while (rs.next()) {
             int id_phieunhap = rs.getInt("id_phieunhap");
             String ngaynhap = rs.getString("ngaynhap");
-            int id_ncc = rs.getInt("id_ncc");
+            String tenncc = rs.getString("tenncc");
             int id_nhanvien = rs.getInt("id_nhanvien");
             String tongtien = rs.getString("tongtien");
             int trangthai = rs.getInt("trangthai");
-            PhieuNhapDTO pnDTO = new PhieuNhapDTO(id_phieunhap, ngaynhap, id_ncc, id_nhanvien, tongtien, trangthai);
+            PhieuNhapDTO pnDTO = new PhieuNhapDTO(id_phieunhap, ngaynhap, tenncc, id_nhanvien, tongtien, trangthai);
             result = pnDTO;
         }
         MySQLConnection.closeConnection(connect);

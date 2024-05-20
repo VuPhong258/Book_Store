@@ -129,15 +129,18 @@ public class ChiTietSP extends javax.swing.JFrame {
 
         txt_nametacgia.setEditable(false);
         txt_nametacgia.setBackground(new java.awt.Color(255, 255, 255));
+        txt_nametacgia.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txt_nametacgia.setEnabled(false);
 
         txt_price.setEditable(false);
         txt_price.setBackground(new java.awt.Color(255, 255, 255));
+        txt_price.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txt_price.setEnabled(false);
         txt_price.setFocusable(false);
 
         txt_namesach.setEditable(false);
         txt_namesach.setBackground(new java.awt.Color(255, 255, 255));
+        txt_namesach.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txt_namesach.setEnabled(false);
         txt_namesach.setFocusable(false);
 
@@ -152,11 +155,13 @@ public class ChiTietSP extends javax.swing.JFrame {
 
         txt_quantity.setEditable(false);
         txt_quantity.setBackground(new java.awt.Color(255, 255, 255));
+        txt_quantity.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txt_quantity.setEnabled(false);
         txt_quantity.setFocusable(false);
 
         txt_namehinhanh.setEditable(false);
         txt_namehinhanh.setBackground(new java.awt.Color(255, 255, 255));
+        txt_namehinhanh.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txt_namehinhanh.setEnabled(false);
         txt_namehinhanh.setFocusable(false);
 
@@ -176,6 +181,7 @@ public class ChiTietSP extends javax.swing.JFrame {
 
         txt_loai.setEditable(false);
         txt_loai.setBackground(new java.awt.Color(255, 255, 255));
+        txt_loai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txt_loai.setEnabled(false);
         txt_loai.setFocusable(false);
 

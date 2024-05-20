@@ -72,7 +72,7 @@ public class ThemNcc extends javax.swing.JFrame {
     
     private boolean isDuplicateTenNCC(String tenNhaCungCap) {
                 nhaCungCapBUS = new NhaCungCapBUS();
-                ArrayList<NhaCungCapDTO> danhSachNhaCungCap = nhaCungCapBUS.getAll();
+                ArrayList<NhaCungCapDTO> danhSachNhaCungCap = nhaCungCapBUS.getAllNCC();
                 for (NhaCungCapDTO kh : danhSachNhaCungCap) {
                     if (kh.getTenNcc().equalsIgnoreCase(tenNhaCungCap)) {
             return true;
